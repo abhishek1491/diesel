@@ -206,7 +206,7 @@
                         <div id="secondary" class="nav cart col-md-3" data-bonuseligibleorder="false">
                             <div class="return-item-msg">
                                 <div class="icon-return">
-                                    <img src="/on/demandware.static/Sites-DieselUS-Site/-/default/v1446144754190/../images/info-icon.png"/>
+                                    <img src="<?=base_url()?>images/info-icon.png"/>
                                 </div>
                                 <div class="return-txt">
                                     <div class="content-asset">

@@ -10,7 +10,7 @@ class Cart_model extends CI_Model{
         //$this->load->library('productimage');
     }
 	
-	public function check_product($colors, $barcode, $qty = '', $style='', $cart_id = '')
+	public function check_product($colors, $barcode, $qty = '', $style='', $cart_id = '', $usr_id = '', $user_type = '')
 	{
 			
 			$returnVal = false;
@@ -34,7 +34,7 @@ class Cart_model extends CI_Model{
 			
 			//$subtotal   = $rec['price'];
 			$subtotal   = '1298';
-			$user_id    = '1003';
+			$user_id    = $usr_id;
 			$product_id	= $rec['style'];
 			$prod_type	= 'jacket';	
 			$barcode	= $rec['barcode'];
@@ -42,17 +42,21 @@ class Cart_model extends CI_Model{
 			$price		= '1298';
 			$qty 		= 1;
 			$size		= $rec['size'];
+			$prodname	= $rec['disp_name'];
 			
 			$cart_data = array(
-							'user_id'    => $user_id,
-							'product_id' => $product_id,
-							'prod_type'  => $prod_type,
-							'code'    	 => $barcode,
-							'color'      => $color,
-							'price'      => $price,
-							'qty'        => $qty,
-							'size'		 => $size,
-							'created_dt' => date('Y-m-d H:i:s')
+							'user_id'    		=> $user_id,
+							'user_type'			=> $user_type,	
+							'product_id' 		=> $product_id,
+							'prod_type'  		=> $prod_type,
+							'code'    	 		=> $barcode,
+							'prod_name'			=> $prodname,
+							'color'      		=> $color,
+							'price_sale'      	=> $price,
+							'original_price'    => $price,
+							'qty'        		=> $qty,
+							'size'		 		=> $size,
+							'created_dt' 		=> date('Y-m-d H:i:s')
 						);
 						
 			//$barcode = $rec['barcode'];
@@ -61,11 +65,11 @@ class Cart_model extends CI_Model{
 			if(!empty($cart_id))
 			{		
 
-				$sql     = "SELECT cart_id FROM cart WHERE cart_id = '{$cart_id}' AND user_id = '{$user_id}'";
+				$sql     = "SELECT cart_id FROM cart_detail WHERE cart_id = '{$cart_id}' AND user_id = '{$user_id}'";
 			
 				$query  = $this->db->query($sql);
 				
-				$table = 'cart';
+				$table = 'cart_detail';
 
 				if($query->num_rows() == 0)
 				{
@@ -86,11 +90,11 @@ class Cart_model extends CI_Model{
 			else
 			{
 
-				$sql     = "SELECT cart_id FROM cart WHERE code = '{$barcode}' AND user_id = '{$user_id}'";
+				$sql     = "SELECT cart_id FROM cart_detail WHERE code = '{$barcode}' AND user_id = '{$user_id}'";
 			
 				$query  = $this->db->query($sql);
 				
-				$table = 'cart';
+				$table = 'cart_detail';
 
 				if($query->num_rows() == 0)
 				{
@@ -100,17 +104,25 @@ class Cart_model extends CI_Model{
 				
 				else
 				{
-					/*$sql     = "SELECT qty FROM cart WHERE code = '{$barcode}' AND user_id = '{$user_id}'";
+					$sql     = "SELECT qty FROM cart_detail WHERE code = '{$barcode}' AND user_id = '{$user_id}'";
 					$query   = $this->db->query($sql);
 					$quantity = $query->result();
-					var_dump($quantity);
-					die();
-					$update_quantity = $quantity + 1;*/
+					//var_dump($quantity);
+					//die();
+					$update_quantity = (int)$quantity[0]->qty + 1;
+					//var_dump($update_quantity);
+					//die();
+					$up_data = array(
+							'qty'    => $update_quantity,
+					);
 					
 					$this->db->where("product_id", $style);
+					$this->db->where("code", $barcode);
 					$this->db->where("user_id", $user_id);
-					$this->db->update($table, $cart_data);/*$update_quantity*/
-					$returnVal = true;
+					$this->db->update($table, $up_data);/**/
+					
+					$returnVal = $update_quantity;
+					
 				}
 
 			}
@@ -121,10 +133,9 @@ class Cart_model extends CI_Model{
 	}
 	
 	
-	public function show_cart()
+	public function show_cart($barcode = '', $user_id = '')
 	{
-        $user_id    = '1003';
-        $sql        = "SELECT * FROM cart WHERE user_id = '{$user_id}' limit 1";
+        $sql        = "SELECT * FROM cart_detail WHERE user_id = '{$user_id}' and code = '{$barcode}' limit 1";
         $query      = $this->db->query($sql);
         
         
@@ -138,32 +149,18 @@ class Cart_model extends CI_Model{
             foreach ($carts as $cart_details) 
 			{
                 
-                
-                $barcode = $cart_details['code'];
-				
-				/*$sql        = "SELECT * FROM cart WHERE code = '{$barcode}' limit 1";
-				$query      = $this->db->query($sql);
-				
-				if($query->num_rows() != 0)
-				{
-					$quan = $query->result();
-					$product = $quan->qty;
-					
-				}
-				
-				else
-				{*/
+					$barcode = $cart_details['code'];
 					$color   = $cart_details['color'];
 					$qty     = $cart_details['qty'];
 
 					$sql = "SELECT *
-                        FROM prod_mast fm 
-                        join prod_variation fv on fm.style = fv.style 
-                        join prod_barcode fb on fb.style = fv.style AND fb.color = fv.attr_code
-                        WHERE barcode = $barcode GROUP BY barcode";
+							FROM prod_mast fm 
+							join prod_variation fv on fm.style = fv.style 
+							join prod_barcode fb on fb.style = fv.style AND fb.color = fv.attr_code
+							WHERE barcode = $barcode GROUP BY barcode";
                         //WHERE barcode = $barcode and price > 0 GROUP BY barcode";
 
-                //echo "$sql";exit;
+						//echo "$sql";exit;
                         
 					$query  = $this->db->query($sql);
 							
@@ -187,6 +184,24 @@ class Cart_model extends CI_Model{
 						
 						$price 		= '1298';
 						
+					
+						$sql = "SELECT variation_code,image_path	 
+								FROM prod_images
+								WHERE style='$style'
+								AND variation_code = '$color'
+								AND variation_code != '' limit 1";
+                        //WHERE barcode = $barcode and price > 0 GROUP BY barcode";
+
+						//echo "$sql";exit;
+                        
+					$query  = $this->db->query($sql);
+							
+					if($query->num_rows() == 0):
+						exit;
+					endif;
+					$image_path     = $query->result_array();
+					
+					
 					/*
 						if($rec['prod_type'] == 'Footwear'){
 							$link  = product_link($prod_type, $gender, $name, $style, $color_code);
@@ -225,13 +240,14 @@ class Cart_model extends CI_Model{
 						//$discount = number_format($discount, 2);
 						//$subtotal = number_format($subtotal, 2);
 						*/
+						
 						$product[] = array(
 									   // 'cart_id'       => $cart_details['cart_id'],
 										'name'          => $name,
 										'style'         => $style,
 										'gender'        => $gender,
 										//'description'   => $rec['prod_desc'],
-										//'image'         => $image,
+										'image'         => base_url().'images/'.$image_path[0]['image_path'],
 										//'link'          => $link,
 										//'prodcode'      => $rec['style'],
 										'size'          => $rec['size'],	
@@ -252,12 +268,8 @@ class Cart_model extends CI_Model{
 									);
 						
 						endforeach;
-				//}
-                
-                        
-                    
+	                 
             }
-            
             return $product;
 
         }
@@ -266,4 +278,25 @@ class Cart_model extends CI_Model{
             return false;
         }
     }
+	
+	//get data for cart page..
+	public function get_cart_items($user_id=''){
+		$guest_id = $this->session->userdata('__ci_last_regenerate');
+
+		if(isset($user_id) && $user_id != ''){
+			$user_id = $user_id;
+		}else{
+			$user_id = $this->session->userdata('s_uid');	
+		}
+		
+		$this->db->select('*');
+		$this->db->from('cart_detail');
+		$this->db->where('user_id',$user_id);
+		$query = $this->db->get();
+			
+		 if($query->num_rows() > 0):
+			return $query->result_array();
+		 endif;
+	
+	}
 }

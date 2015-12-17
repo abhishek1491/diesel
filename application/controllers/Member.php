@@ -79,7 +79,7 @@ class Member extends CI_Controller {
 		$view_file_name = 'register_view';
 		$data = '';
 		$data['view_file_name'] = $view_file_name;
-		$this->template->load_member_view($view_file_name , $data);
+		$this->load->view('member/'.$view_file_name , $data);
 	}
 
 	public function user_registration(){

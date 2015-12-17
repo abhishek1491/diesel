@@ -1,4 +1,4 @@
-<?
+<?php
 
 function clean_string_old($string) {
    $string = str_replace(' ', '', $string); // Replaces all spaces with hyphens.
@@ -196,35 +196,8 @@ function get_search_link($url){
 }
 
 
-function quickview_link($prod_type, $gender, $name, $style, $color_code, $cart_id, $qty, $barcode=""){
-    
-    switch ($gender){
-        
-        case 'W':
-            $fGen="women";
-        break;
-            case 'M':
-            $fGen="men";
-        break;
-        case 'w':
-            $fGen="women";
-        break;
-        case 'm':
-            $fGen="men";
-        break;
-        default:
-            $fGen="all";
-        break;
-    }
-    $prod_type     = clean_string($prod_type);
-    $formatappname = clean_string($name);
-    $formatid = $style."_".$color_code;
 
-    $link = base_url()."cart/show_product/$prod_type/$fGen/$formatappname/$formatid/$cart_id/$qty/$barcode";
 
-    return $link;
-
-}
 
 
 
@@ -306,105 +279,237 @@ function subproduct_page_info($cat_name,$gender){
         break;
 
 
-        case "guidance":
-            $info = array(
-                "cat_info" => "the sweet spot between cushion and support",
-                "cat_desc" => "Get the perfect blend of cushion and stability with our Guidance running shoes. They’re ideal for heel to forefoot strikers who require a touch of stability for mild overpronation (the tendency to roll your foot to the medial or inside). With the aid of a small medial post (a denser foam on the instep) you can achieve a more neutral footstrike."
-            );
-        break;
-
-        case "support":
-            $info = array(
-                "cat_info" => "balance your stride with added stability and cushion",
-                "cat_desc" => "Support running shoes are great if you're a heel striker who requires added stability for moderate overpronation (the tendency to roll your foot to the medial or inside). A large medial post (a denser foam on the instep of the shoe) that runs from the rear of the shoe into the forefoot balances the inward motion of the foot to help you achieve a more neutral stride."
-            );
-        break;
-
-        case "motion control":
-            $info = array(
-                "cat_info" => "the ultimate stability and support",
-                "cat_desc" => "Control running shoes are a smart choice for heel strikers who need a higher degree of stability due to severe overpronation, and may have a low to no arch or use an orthotic. Control shoes feature a linear platform and a large medial post (a denser foam on the instep of the shoe) to create enough stability to help you achieve a neutral footstrike."
-            );
-        break;
-
-        case "pureproject":
-            $info = array(
-                "cat_info" => "shoes for those who love to feel the run",
-                "cat_desc" => "Our lightweight running shoes are built lower to the ground and have fewer overlays in the upper, which keeps them light and responsive. Like all Brooks shoes, our lightweight line is designed to enhance your natural running motion while providing the perfect amounts of support and cushion."
-            );
-        break;
-
-        case "trail":
-            $info = array(
-                "cat_info" => "take a run at the great outdoors",
-                "cat_desc" => "Brooks trail running shoes have all the features you expect from Brooks running shoes, with rugged extras that let you get down and dirty. Get a great Brooks fit combined with tricky-terrain technologies for all of your rock jumping, brush stomping, off-the-beaten-path outdoor excursions."
-            );
-        break;
-
-        case "competition":
-            $info = array(
-                "cat_info" => "serious shoes for your serious runs",
-                "cat_desc" => "Lace up our competition shoes and get ready for race day. Designed for serious runs using advanced materials and innovative technologies, they’re ready to take you from training to the starting pistol to your personal best. And you’re going to look good while you’re doing it!"
-            );
-        break;
-
-        case "x-training":
-            if($gender == 'women'){
-                $info = array(
-                "cat_info" => "",
-                "cat_desc" => "Designed to stand up to a range of different workouts, these running inspired cross trainers will take you from your run, to the gym, to your favourite court sport and everywhere in between – no sweat! So if you need a shoe that is just as adaptive as your exercise regime, Brooks has a range of cross training shoes for you."
-                );
-            }else{
-               $info = array(
-                "cat_info" => "",
-                "cat_desc" => "Like to mix it up when it comes to staying fit? Brooks' x-training shoes for men are designed specifically to be versatile for all kinds of surfaces and forms of exercise, so you can get the most out of every workout." 
-                );
-            }
-            
-        break;
-
-        case "netball":
-            $info = array(
-                "cat_info" => "",
-                "cat_desc" => "Be confident to pivot, pass, and generally play at your best with a pair of Brooks' netball shoes on your feet. We’ve used the latest in innovative sporting technology to make sure you're fully supported and comfortable throughout every game, no matter how intense."
-            );
-        break;
-
-        case "kids":
-            if($gender == 'girl'):
-                $info = array(
-                    "cat_info" => "",
-                    "cat_desc" => "For girls with an active and adventuresome lifestyle, it's important to have a pair of running shoes that can keep up with them. We are dedicated to delivering products that will quickly become the best friend of your young one's feet because we care about the support, comfort, durability, and style of our footwear."
-                );
-            else:
-                $info = array(
-                    "cat_info" => "",
-                    "cat_desc" => "Brooks is proud to be able to create some of the best boys' running shoes on the market, thanks to not only our focus on style, comfort, and support, but also on durability through all the wear and tear that occurs every day."
-                );
-            endif;
-            
-        break;
-
-        case "walking":
-            $info = array(
-                "cat_info" => "walk a mile in our shoes - then walk another mile",
-                "cat_desc" => "Get the fit and feel of top-of-the-line running shoes in a casual every day walker. Built with a supple leather upper, energy-returning midsole cushioning and a reliable slip-resistant outsole, Brooks walking shoes provide sturdy support, mile after mile."
-            );
-        break;
-
-        case "sale":
-            $info = array(
-                "cat_info" => "closeout prices on earlier models of our running shoes for $gender",
-                "cat_desc" => "Closeout prices on previous editions of our running shoes... whether you're looking for a bargain or you just can't bear to break up with your current model, you can score some great deals on sweet shoes. Think of this as our online outlet store."
-            );
-        break;
-
         default:
             $info = array("cat_info" => '',"cat_desc" => '' );
             break;
 
     }
     return $info;
+}
+
+
+function listing_page_info($category){
+    switch($category){
+        case "men":
+            $info = array(
+                "slot_1" => array(
+                    "heading" => "MALE COLLECTION",
+                    "description" => "The Fall Winter collection is fresh, modern and still packed with that unmistakable Diesel attitude. Military camouflage and rock 'n' roll denim get updated with texture-clashing fabrics, innovative treatments and shots",
+                    "main_image_name" => "men_cover_img"
+                ),
+
+                "slot_2" => array(
+                    "heading" => "DENIM",
+                    "description" => "Worn-in for a vintage look, dyed and coated for a contemporary feel or detailed with rebel studs and punk safety pins; as long as you like your denim with attitude the Fall/ Winter range has you covered. Try the innovative stretch-denim JoggJeans for a sporty fit and effortless movement.",
+                    "main_image_name" => "02_DENIM-MALE",
+                    "url" => base_url().'product/mens/denim'
+
+                ),
+
+                "slot_3" => array(
+                    "feature_1" => array(
+                        "feature_image_name" => '03_SHOES-MALE',
+                        "feature_heading"   => 'SHOES',
+                        "feature_description" => 'The Fall/ Winter footwear mixes biker references with classic style. Choose from buckled motorcycle boots, clean-lined shoes or relaxed sneakers in clashing materials.',
+                        "url" => base_url().'product/mens/footwear',
+                        "img_alt_title_data" => 'SHOES',
+                        "anchor_title_data" => 'Shop Male Shoes'
+                    ),
+                    "feature_2" => array(
+                        "feature_image_name" => '04_JACKETS-MALE',
+                        "feature_heading"   => 'LEATHER JACKETS',
+                        "feature_description" => 'Sharp silhouettes and clean-lined design bring contemporary cool to our Fall/ Winter leather jacket offering. Biker style and punk irreverence still reign supreme with metal-studded black leather and safety pins.',
+                        "url" => base_url().'product/mens/jackets',
+                        "img_alt_title_data" => 'JACKETS',
+                        "anchor_title_data" => 'Shop Jackets for Men'
+                    ),
+                    "feature_3" => array(
+                        "feature_image_name" => '05_WATCHES-MALE',
+                        "feature_heading"   => 'WATCHES',
+                        "feature_description" => 'Sync it up and strap it on. Size matters.',
+                        "url" => base_url().'product/mens/watches',
+                        "img_alt_title_data" => 'WATCHES',
+                        "anchor_title_data" => 'Shop New Male Watches'
+                    ),
+
+                )
+
+            );
+        break;
+
+	
+		
+		//case women 	
+			
+		case "women":
+            $info = array(
+                "slot_1" => array(
+                    "heading" => "S/S'16 PRE-COLLECTION",
+                    "description" => "Mix and match 70's Americana and 90's grunge for a relaxed, downtown vibe this season",
+                    "main_image_name" => "01_2"
+                ),
+
+                "slot_2" => array(
+                    "heading" => "DENIM DU JOUR",
+                    "description" => "From alternative fits like the denim Chino to the classic, high waisted skinny, it's time to make a fresh statement with your denim",
+                    "main_image_name" => "02_2",
+                    "url" => base_url().'product/womens/denim'
+
+                ),
+
+                "slot_3" => array(
+                    "feature_1" => array(
+                        "feature_image_name" => '03_SHOES',
+                        "feature_heading"   => 'SHOES',
+                        "feature_description" => 'Wear them flatform high or distinctively mannish and low. The choice is stylishly yours',
+                        "url" => base_url().'product/womens/footwear',
+                        "img_alt_title_data" => 'SHOES',
+                        "anchor_title_data" => 'Shop Female Shoes'
+                    ),
+                    "feature_2" => array(
+                        "feature_image_name" => '04_BAGS_2',
+                        "feature_heading"   => 'IT\'S IN THE BAG',
+                        "feature_description" => 'Your new arm candy has arrived',
+                        "url" => base_url().'product/womens/bags',
+                        "img_alt_title_data" => 'BAGS',
+                        "anchor_title_data" => "Shop Women's Bags"
+                    ),
+                    "feature_3" => array(
+                        "feature_image_name" => '05_LEATHER-JACKETS',
+                        "feature_heading"   => 'LEATHER JACKETS',
+                        "feature_description" => 'From the classic biker to the updated motor cross jacket reinterpreted from our archives. Get your hands on our leathers',
+                        "url" => base_url().'product/womens/jackets',
+                        "img_alt_title_data" => 'JACKETS',
+                        "anchor_title_data" => 'Shop Jackets for Women'
+                    ),
+
+                )
+
+            );
+        break;
+
+			
+		//case denim	
+		
+		case "denim":
+            $info = array(
+                "slot_1" => array(
+                    "heading" => "TRAIL-BLAZE IN DENIM",
+                    "description" => "Introducing the S/S 16 Preview collection: We've taken denim to another level",
+                    "main_image_name" => "01_SS16COLLECTION"
+                ),
+
+                "slot_2" => array(
+                    "feature_1" => array(
+                        "feature_image_name" => '09_DENIM LANDING',
+                        "feature_heading"   => 'SEASONAL WASHES FOR HIM',
+                        "feature_description" => 'From vintage styles to rock marble washes, find your new season denim now',
+                        "url" => base_url().'product/womens/bags',
+                        "img_alt_title_data" => 'Shop the Fall Winter \'15 Wash Stories'
+                    ),
+                    "feature_2" => array(
+                        "feature_image_name" => '09_DENIM LANDING_03',
+                        "feature_heading"   => 'SEASONAL WASHES FOR HER',
+                        "feature_description" => 'From deep contrasting tones to ripped and repaired finishes, Diesel\'s mastery in denim treatments knows no bounds this season',
+                        "url" => base_url().'product/womens/bags',
+                        "img_alt_title_data" => 'Shop the Fall Winter \'15 Wash Stories'
+                    ),
+                ),
+
+                "slot_3" => array(
+                    "feature_1" => array(
+                        "feature_image_name" => '09_DENIM LANDING_04',
+                        "feature_heading"   => 'THE NEW ACTYVISTA',
+                        "feature_description" => 'Meet blogger superstar Mimi Elashiry as she shows off denim\'s versatile side',
+                        "url" => base_url().'product/womens/footwear',
+                        "background_image_name" => '05_ACTYVISTA_BACKGROUND',
+                        "img_alt_title_data" => 'ACTYVISTA',
+                        "anchor_title_data" => 'Shop Actyvista'
+                    ),
+                    "feature_2" => array(
+                        "feature_image_name" => '09_DENIM LANDING_05',
+                        "feature_heading"   => 'TELLING IT LIKE IT IS',
+                        "feature_description" => 'New season, New Denim film',
+                        "url" => base_url().'product/womens/bags',
+                        "background_image_name" => '06_BRAND-FILM_BACKGROUND',
+                    ),
+                )
+
+            );
+        break;
+
+
+        default:
+            $info = array();
+            break;
+			
+    }
+    return $info;
+}
+
+
+
+/**
+ * return different filter by option for particular category
+ * @param: category name string
+ * @return: options array
+ */
+
+
+function get_filter_by_options($sub_category_name){
+
+    switch ($sub_category_name) {
+        case 'jackets':
+            //return array('prod_attributes'=>'category','prod_attributes'=>'color','prod_variation'=>'size');
+            return array(
+                array(
+                    'table_name'=>'prod_attributes',
+                    'option_name'=>'category',
+                ),
+                array(
+                    'table_name'=>'prod_attributes',
+                    'option_name'=>'color',
+                ),
+                array(
+                    'table_name'=>'prod_variation',
+                    'option_name'=>'size',
+                ),
+
+                
+            );
+            
+            break;
+        
+        default:
+            return array(
+                array(
+                    'table_name'=>'prod_attributes',
+                    'option_name'=>'category',
+                ),
+                array(
+                    'table_name'=>'prod_attributes',
+                    'option_name'=>'color',
+                ),
+                array(
+                    'table_name'=>'prod_variation',
+                    'option_name'=>'size',
+                ),
+
+                
+            );
+            break;
+    }
+}
+
+
+/* return proper url for navigation menu */
+
+function get_url($category_key,$gender){
+    if (strpos($category_key,'cgid') !== false) {
+        return base_url().'show_search'.strtolower($category_key);
+    }else{        
+        return base_url().'product/'.$gender.'/'.strtolower($category_key);
+    }
 }
 
 
@@ -423,7 +528,7 @@ function make_sql_in_string($type_arr){
        foreach($type_arr as $curr_type):
         $type_range .= "'" . $curr_type . "'".",";
         endforeach;
-        $type_range = trim($type_range,','); 
+        //$type_range = trim($type_range,','); 
     }
     
     return $type_range;
@@ -570,3 +675,5 @@ return <<<HTML
       });
 HTML;
 }
+
+?>

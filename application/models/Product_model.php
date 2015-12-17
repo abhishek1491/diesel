@@ -295,6 +295,159 @@ public function get_gender($gender){
 	}
 }
 
+
+public function get_landing_products($category_name){
+	$ret_val_arr = array();
+
+	switch ($category_name) {
+		case 'men':
+			$product_arr = array('00SK0A0846X','00SKAL0845N','00SDHB0842U','00S0Y80847K');
+			$criteria = "";
+			break;
+
+		case 'denim':
+			$product_arr = array('00AAZL0885K','00CZAK0600V','00CNYV0842R','00CQLP0800R');
+			$criteria = "";
+			break;
+
+		case 'women':
+			$product_arr = array('00SJDZ0DAJR','00SJ950SAIG');
+			$criteria = "";
+			break;
+
+		case 'home':
+			$product_arr = array('00SJT20CAKE', '00SJKF0SAGJ','00SJFF0HAHU','00SKAL0845N','00SLDR0BAAF', 'DZ733100QQQ', 'Y01182PR697', '00S5BL0837C', '00SIYP0IAIV', '00SM410HAFV', 'Y01182PR697', 'DZ733100QQQ');
+
+	}
+
+	// get product details 
+
+	foreach($product_arr as $curr_style){
+		/*$sql = "select c.attr_value, a.disp_name , a.style, attr_code
+				from prod_mast a, prod_variation b, prod_attributes c
+				where a.style = b.style and 
+				b.style = c.style and
+				a.style = '{$curr_arr}' and
+				b.attr_type = 'color' and
+				c.attr_id = 'dgaLook'
+				group by c.style";*/
+
+		$sql = "select a.disp_name , a.style, attr_code, d.*
+				from prod_mast a, prod_variation b, category_assignment d 
+				where a.style = b.style and 
+				a.style = d.`product-id` and 
+				a.style = '{$curr_style}' and 
+				b.attr_type = 'color'
+				group by b.style";
+
+		//echo $sql;exit;
+
+		$query = $this->db->query($sql);
+		$curr_value = $query->row_array();
+		$curr_value['prod_images'] = $this->get_product_img_url($curr_style,1);
+		$ret_val_arr[] = $curr_value;	
+
+	}
+
+	/*echo '<pre>';
+	print_r($ret_val_arr);
+	echo '</pre>';
+	exit;*/
+
+	return $ret_val_arr;
+
+	
+}
+
+/**
+ * function to retrieve products from db as per filter options
+ */
+
+public function get_filter_product($gender,$category_name,$type='',$category_filter='',$color_filter='',$size_filter=''){
+
+	$table_name = '';
+	$prod_arr = array();
+
+	
+
+	$size_criteria = $filter_criteria = '';
+	$table_criteria = 'a.style = b.style and ';
+	$table_name .= ', prod_attributes b';
+	$filter_criteria = " b.attr_value IN (";
+	$filter_value = '';
+	if(!empty($category_filter)){		
+		$filter_value .= make_sql_in_string($category_filter);
+	}
+
+	if(!empty($color_filter)){
+		$filter_value .= make_sql_in_string($color_filter);
+	}
+
+	//print_r($category_filter);exit;
+
+	
+
+	if(!empty($size_filter)){
+		if(!empty($category_filter) || !empty($color_filter)){
+			$filter_value = trim($filter_value,',');
+			$filter_criteria .= "$filter_value) and";
+		}
+		elseif(!empty($category_filter) && !empty($color_filter)){
+			$filter_value = trim($filter_value,',');
+			$filter_criteria .= "$filter_value) and";	
+			
+		}else{
+			$table_name = '';
+			$filter_criteria = '';
+			$table_criteria = '';
+		}
+		$table_name .= ', prod_variation c';
+		$table_criteria .= 'a.style = c.style and ';
+		$size_criteria = "c.attr_value IN (". trim(make_sql_in_string($size_filter), ',').") and";
+	}else{
+		$filter_value = trim($filter_value,',');
+		$filter_criteria .= "$filter_value) and";
+	}
+
+	
+
+	
+
+	if($category_name == 'denimguide'){
+		$return_gender_value = (!empty($this->get_gender($gender)) ? $this->get_gender($gender) : $gender);
+		//$return_gender_value = $gender;
+		$criteria = "d.L2 = '{$return_gender_value}' and
+					 d.L4 = '{$category_name}' and
+					 d.L6 = '{$type}'";
+	}else{
+		$return_gender_value = $this->get_gender($gender);
+		$criteria = "d.L2 = '{$return_gender_value}' and
+					 d.L4 = '{$category_name}'";
+	}
+	$sql = "select a.disp_name , a.style, d.*
+			from prod_mast a, category_assignment d $table_name 
+			where $size_criteria $filter_criteria	
+			a.style = d.`product-id` and
+			$table_criteria
+			d.L1 = 'diesel' and
+			$criteria
+						
+			group by a.style";
+	echo $sql;
+	//exit;
+
+	$query = $this->db->query($sql);
+	$result = $query->result_array();	
+
+	foreach($result as $curr_result){
+		$curr_result['prod_images'] = $this->get_product_img_url($curr_result['style'],1);
+		$curr_result['color_code'] = $this->get_product_color($curr_result['style']);
+		$prod_arr[] = $curr_result;
+	}
+	return $prod_arr;
+}
+
+
 	
 } // end of model class
 	
