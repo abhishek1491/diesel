@@ -133,9 +133,9 @@ class Cart_model extends CI_Model{
 	}
 	
 	
-	public function show_cart($barcode = '', $user_id = '')
+	public function show_cart($user_id = '')
 	{
-        $sql        = "SELECT * FROM cart_detail WHERE user_id = '{$user_id}' and code = '{$barcode}' limit 1";
+        $sql        = "SELECT * FROM cart_detail WHERE user_id = '{$user_id}'";
         $query      = $this->db->query($sql);
         
         
@@ -252,8 +252,9 @@ class Cart_model extends CI_Model{
 										//'prodcode'      => $rec['style'],
 										'size'          => $rec['size'],	
 										//'sku'           => $rec['sku'],
-										//'barcode'       => $rec['barcode'],
+										'barcode'       => $barcode,
 										'price_sale'    => $price,
+										'user_id'		=> $user_id,
 										//'price'         => $rec['price'],
 										//'promo_code'    => $cart_details['promo_code'],
 										//'promo_string'  => $cart_details['promo_string'],
@@ -264,7 +265,8 @@ class Cart_model extends CI_Model{
 										//'subtotal'      => $subtotal,
 										//'discount_amt'  => $discount,
 										//'type'          => $rec['prod_type'],
-										'qty'           => $qty
+										'qty'           => $qty,
+										'remove_url'	=> base_url().'cart/remove_item'
 									);
 						
 						endforeach;
@@ -280,7 +282,7 @@ class Cart_model extends CI_Model{
     }
 	
 	//get data for cart page..
-	public function get_cart_items($user_id=''){
+	public function get_cart_items($user_id='',$prod_name = null,$barcode = null){
 		$guest_id = $this->session->userdata('__ci_last_regenerate');
 
 		if(isset($user_id) && $user_id != ''){
@@ -289,14 +291,141 @@ class Cart_model extends CI_Model{
 			$user_id = $this->session->userdata('s_uid');	
 		}
 		
-		$this->db->select('*');
-		$this->db->from('cart_detail');
-		$this->db->where('user_id',$user_id);
-		$query = $this->db->get();
+		if(isset($prod_name) && isset($barcode))
+		{
+			$sql = "SELECT distinct code,cart_id,prod_type,prod_name,color,size,qty,price_sale,original_price,product_id	 
+					FROM cart_detail 
+					WHERE user_id='$user_id'
+					AND prod_name = '$prod_name'
+					AND code = '$barcode'";
+		}
+		else
+		{
+			$sql = "SELECT distinct code,cart_id,prod_type,prod_name,color,size,qty,price_sale,original_price,product_id	 
+					FROM cart_detail 
+					WHERE user_id='$user_id'";
+		}
+		
+				
+		$query = $this->db->query($sql);
+		
 			
 		 if($query->num_rows() > 0):
 			return $query->result_array();
 		 endif;
 	
 	}
+	
+	public function update_qty($style = '', $barcode = '', $quantity = '')
+	{
+		$guest_id = $this->session->userdata('__ci_last_regenerate');
+		
+		$table = 'cart_detail';
+		
+		$data = array(
+			'qty' => $quantity
+		);
+		
+		$this->db->where("user_id", $guest_id);
+		$this->db->where("code", $barcode);
+		$this->db->update($table, $data);
+		
+		$sql = "SELECT *	 
+				FROM cart_detail
+				WHERE product_id='$style'
+				AND user_id = '$guest_id'
+				AND code = '$barcode'";
+		
+		$query = $this->db->query($sql);
+		
+		return $query->result();
+	}
+	
+	public function get_prod_images($style = '',$color=''){
+	$sql = "SELECT variation_code,image_path	 
+			FROM prod_images
+			WHERE style='$style'
+			AND variation_code = '$color'
+			AND variation_code != '' LIMIT 1";
+		
+		$query = $this->db->query($sql);
+		
+		return $query->result();
+	//echo $sql;exit;
+}
+
+public function get_color($style='',$barcode=''){
+
+	$customized_arr = array(); //customized array that will contatin the final result of the method
+
+
+	// get all the size available for the particular style
+
+	$sql = "SELECT distinct barcode,color,size, microcolor,macrocolor	 
+			FROM prod_barcode 
+			WHERE style='$style'
+			AND color != '' 
+			AND barcode = '$barcode'
+			GROUP BY color";
+		
+		$query = $this->db->query($sql);
+		
+		return $query->result();
+		//echo $sql;exit;
+
+}
+
+public function remove_prod($user_id,$style,$barcode){
+	
+	$this->db->where('user_id', $user_id);
+	$this->db->where('product_id', $style);
+	$this->db->where('code', $barcode);
+	$this->db->delete('cart_detail'); 
+	
+	/*$sql = "DELETE FROM cart_detail
+			WHERE product_id='$style'
+			AND user_id = '$user_id'
+			AND code = '$barcode'";*/
+		
+	$sql1 = "Select *
+			FROM cart_detail
+			WHERE product_id='$style'
+			AND user_id = '$user_id'
+			AND code = '$barcode'";	
+			
+		$query = $this->db->query($sql1);
+		
+		
+		if($query->num_rows() > 0):
+			return 'success';
+		 endif;
+	//echo $sql;exit;
+}
+
+public function update_prod($user_id,$style,$barcode,$fsize,$color,$bar){
+	
+	
+	$data = array(
+		'color' =>$color,
+		'size'  =>$fsize,
+		'code'  =>$barcode
+	);
+	
+	$table = 'cart_detail';
+	
+	$this->db->where('user_id', $user_id);
+	$this->db->where('product_id', $style);
+	$this->db->where('code', $bar);
+	$this->db->update($table, $data); 
+	
+}
+
+	public function delete_cart_item($barcode,$user_id){
+        $barcode = $barcode;
+        $user_id = $user_id;
+        $this->db->where('code', $barcode);
+        $this->db->where('user_id', $user_id);
+        $this->db->delete('cart_detail');
+    }
+	
 }

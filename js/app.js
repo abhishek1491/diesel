@@ -7947,9 +7947,26 @@ var app = (function(app, $) {
   }
 
   function updateQuantity(that) {
-    if ($(that).hasClass('disabled')) return;
-    /* To disable the another click while one click underway */
-    $(that).addClass('disabled');
+    
+	var quan = $(that).parent().find('input:text');
+	var qval = quan.attr('value');
+	
+	if(qval > 1)
+	{
+		var enable_decrease = $(that).parent().find('decrease-quantity');
+		enable_decrease.removeClass('disabled');
+	}
+	else
+	{
+		if(qval <= 1)
+		{
+			$('.decrease-quantity').addClass('disabled');
+		}
+		
+		if ($(that).hasClass('disabled')) return;	
+	}
+	/* To disable the another click while one click underway */
+    //$(that).addClass('disabled');
     var className = $(that).attr('class'),
       quantityInput = $(that).parent().find('input:text'),
       val = parseInt(quantityInput.val()),
@@ -7959,6 +7976,7 @@ var app = (function(app, $) {
       pname = $(that).data('product-name'),
       minCart = $('.header-mini-cart'),
       orderLimit = $('.cart-wrapper').data('purchase-limit');
+	  
     if (className.indexOf('increase-quantity') >= 0) {
       app.analytics.init(app.$cache[59].event_cat, app.$cache[59].event_action, pname);
       quantity = val + 1;
@@ -7969,18 +7987,26 @@ var app = (function(app, $) {
     tempArr = fieldName.split('_');
     index = tempArr[tempArr.length - 2];
     index = index.substr(1);
-    var updateSec = $(that).parents('.product-details-template'),
+	var updateSec = $(that).parents('.product-details-template'),
       prodAvailability = $(that).closest('.tbody-data').find('.product-availability-list');
-    url = $cache.cartForm.attr('action') + '&' + fieldName + '=' + quantity;
-    $.ajax({
+	  
+    url = $cache.cartForm.attr('action');
+	var barcode_find = $(that).parent().find('#barcode');
+	console.log(barcode_find);
+	var barcode = barcode_find.attr('value');
+	var style_find = $(that).parent().find('#style');
+	var style	= style_find.attr('value');
+	console.log(barcode);
+	$.ajax({
       type: 'GET',
       url: url,
       data: {
-        dwfrm_cart_updateCart: 'dwfrm_cart_updateCart',
-        format: 'ajax',
-        index: index
+        'style'		: style,
+		'barcode'	: barcode,
+		'quantity'	: quantity
       }
     }).done(function(response) {
+		
       var temp = $('<div class="secondary-product-detail col-md-6 equal-width-five-sec"></div>'),
         content;
       temp.html(response);

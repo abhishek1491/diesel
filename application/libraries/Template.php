@@ -64,4 +64,10 @@ class Template
         $this->ci->load->view($view_file_name, $data);
         $this->ci->load->view('includes/footer', $data);
     }
+	
+	function load_quick_view($view_file_name = null, $data = null){
+        $this->ci->load->view('includes/header', $data);
+        $this->ci->load->view($view_file_name, $data);
+        $this->ci->load->view('includes/footer', $data);
+    }
 }

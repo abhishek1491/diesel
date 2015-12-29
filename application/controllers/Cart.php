@@ -9,6 +9,7 @@ class Cart extends CI_Controller {
 		parent::__construct();
 		$this->load->library('cart');
 		$this->load->model("Cart_model");
+		$this->load->model("product_model");
 		//$this->load->library('user_agent');
 
 		//$this->load->model("product_model");
@@ -69,17 +70,11 @@ class Cart extends CI_Controller {
 		
 		$prod 		= $this->Cart_model->check_product($color, $barcode, $prod_qty, $style, $cart_id, $user_id, $user_type);
 		
-		
 		if(!empty($prod))
 		{
-			if($prod == 0 || $prod == 1)
-			{
-				$updates = true;
-			}
-			else
-			{
-				$updates = $prod;
-			}
+			
+			$updates = true;
+			
 		}
 		
 		else
@@ -127,11 +122,10 @@ class Cart extends CI_Controller {
 		
 		//$this->data['title']="Cart Page";
 		//$this->data['main_content'] = 'ajax_cart_view';
-		$barcode 	= $this->input->post('barcode');
+		//$barcode 	= $this->input->post('barcode');
 
-		$carts = $this->Cart_model->show_cart($barcode,$user_id);
+		$carts = $this->Cart_model->show_cart($user_id);
 		
-
 		echo json_encode($carts);
 		
 	} // end of show cart method
@@ -147,29 +141,65 @@ class Cart extends CI_Controller {
 			$user_type = 'Member';
 			$user_id = $this->session->userdata('s_uid');
 		}
-
+		
 		$cart = $this->Cart_model->get_cart_items($user_id);
 		
-		if(!empty($cart)):
+		//$style = $cart[0]['product_id'];
+		//$color = $cart[0]['color'];	
+		
+		$i = 0;
+		
+		if(isset($cart))
+		{
+			foreach($cart as $row)
+			{
+		
+				$image_path = $this->Cart_model->get_prod_images($row['product_id'],$row['color']);
+				$microcolor = $this->Cart_model->get_color($row['product_id'],$row['code']);
+			
+				$cart_all[$i] = array(
+				
+					'code'				=>$row['code'],
+					'prod_type'			=>$row['prod_type'],
+					'prod_name'			=>$row['prod_name'],
+					'color'				=>$row['color'],
+					'size'				=>$row['size'],
+					'qty'				=>$row['qty'],
+					'original_price'	=>$row['original_price'],
+					'product_id'		=>$row['product_id'],
+					'image_pathname'	=>$image_path,	
+					'mc'				=>$microcolor,
+					'cart_id'			=>$row['cart_id']
+				);
+				$i++;
+			};	
+			
+		}
+		
+		else
+		{
+			$cart_all = '';
+		}
+		
+		
+		/*if(!empty($cart)):
 			$cart_arr = $cart;
-		/*	$get_promo_code = $this->cart_model->get_promo_code($user_id);
+			$get_promo_code = $this->cart_model->get_promo_code($user_id);
 			
 			if(!empty($get_promo_code)){
 				array_push($cart_arr,$get_promo_code);
 			}
-		*/
+		
 			$data = $this->get_showcart_details($cart_arr,$user_id,$user_type);
 			
 		else:
 			$data = '';
 		endif;
-
-		echo "<pre>";
-		print_r($data);
-		exit;
-		
+		*/
 		$view_file_name = 'cart_view';
         $data['currPage']="cart-page";
+		$data['cart_data']=$cart_all;
+		$data['count'] = sizeof($data['cart_data']);	
 		$data['view_file_name'] = $view_file_name;
 		$this->template->load_cart_view($view_file_name , $data);
 
@@ -400,6 +430,348 @@ class Cart extends CI_Controller {
 		return $data;
 	}
 	
+	
+	public function show_product($prod_type="",$prod_name="", $barcode="")
+	{
+		
+		if(!$this->session->userdata('s_uid') || $this->session->userdata('s_uid')==''){
+			$user_type = 'Guest';
+			$user_id   = $this->session->userdata('__ci_last_regenerate');
+			
+		}else{
+			$user_type = 'Member';
+			$user_id = $this->session->userdata('s_uid');
+		}
+		
+		$prod_data = $this->Cart_model->get_cart_items($user_id,$prod_name,$barcode);
+		
+		$this->data['prod_type'] = $prod_type;
+		$this->data['prod_name'] = $prod_name;
+		$this->data['barcode'] = $barcode;
+		$prod_id = $prod_data[0]['product_id'];
+		$color_code = $prod_data[0]['color'];
+		$this->data['color_code'] = $color_code;
+		$this->data['prod_data'] = $prod_data;
+		$this->data['gender'] = 'M';
+		$this->data['prod_arr'] = $this->product_model->get_product_detail($prod_id);
+		$this->data['size'] 	= $this->product_model->get_size($prod_id, $color_code);
+		$this->data['prod_image_arr'] = $this->product_model->get_prod_images($prod_id,$color_code);
+		$this->data['prod_attr'] = $this->product_model->get_prod_attributes($prod_id);
+		$this->data['color'] = $this->product_model->get_color($prod_id);
+		$count = sizeof($this->data['color']);
+		$this->data['count_color'] = $count;
+		$view_file_name = 'quickview_product';
+		$this->data['view_file_name'] = $view_file_name;
+		$this->load->view('quickview_product',$this->data);
+		/*$this->data['page_info'] = $this->product_model->get_page_info();
+
+		$this->data['prod_type'] = $prod_type;
+		$this->data['prod_name'] = $prod_name;
+		$prod = explode("_", $prod_code);
+		$prod_id = $prod[0];
+		$color_code = $prod[1];
+
+		$this->data['gender'] = $gender;
+
+		$this->load->library('Synkproduct');
+    	$this->synkproduct->sync_ap21_product($prod_id,$color_code,$gender);
+    	//After synnk with Ap21 call product detail
+    	$this->data['prod_arr'] = $this->product_model->get_product_detail($prod_id,$color_code,$gender);
+
+    	if(empty($this->data['prod_arr'])){
+			redirect('errorpage');
+			exit;
+		}else{
+			foreach($this->data['prod_arr'] as $curr_prod){
+				$sku = $curr_prod->sku;
+				$cat = $curr_prod->tag;
+			}
+			
+			$this->data['related_prod_arr'] = $this->product_model->get_related_products($prod_id,$color_code,$sku="");
+			$this->data['cart_id'] 			= $cart_id;
+			$this->data['type'] 			= "Edit Cart";
+			$this->data['qty'] 				= (!empty($qty))? $qty:'1';
+			$this->data['sel_size'] 		= (!empty($sel_size))? $sel_size:0;
+			$this->data['barcode'] 			= (!empty($barcode))? $barcode:0;
+
+			$this->data['view_detail'] 		= base_url().$prod_type.'/'.$gender.'/'.$prod_name.'/'.$prod_code.'/';
+			$this->data['size'] 			= $this->product_model->get_size($prod_id, $color_code);
+			$this->data['width'] 			= $this->product_model->get_width($prod_id,$color_code,$gender);
+			$this->data['specs'] 			= $this->product_model->get_specs($prod_id);
+			$this->data['swatches'] 		= $this->product_model->get_swatches($prod_id);
+			
+			$this->load->view('quickview_product',$this->data);
+		}		
+	}//End of show_product
+	
+	*/
+	}
+	public function update_quantity()
+	{
+		$style = $_GET['style'];
+		$barcode = $_GET['barcode'];
+		$quantity = $_GET['quantity'];
+		
+		$item_update = $this->Cart_model->update_qty($style,$barcode,$quantity);
+		
+		$return_div = '<div class="product-details-template row" data-enableCheckout="false">
+  <div class=" item-quantity col-sm-6 col-md-4 equal-width-two">
+    <h3 class="section-header">Quantity</h3> <span class="decrease-quantity icons" data-product-name="W-KIRTON"></span>
+    <input type="text" name="dwfrm_cart_shipments_i0_items_i0_quantity" size="2" maxlength="2" value="'.$item_update[0]->qty.'" class="input-text" disabled/> 
+	<input type="hidden" name="barcode" id="barcode" value="'.$barcode.'" />
+	<input type="hidden" name="style" id="style" value="'.$style.'" />
+	<span href="" class="increase-quantity icons" data-product-name="W-KIRTON"></span> </div>
+  <div class="item-price col-sm-6 col-md-4 equal-width-four">
+    <h3 class="section-header">Price</h3>
+    <div class="price-promotion">
+      <p class="price-standard">$398.00</p>
+      <p class="price-sales">$278.60</p>
+    </div>
+  </div>
+  <div class="item-total col-sm-12 col-md-4 equal-width-four-sec">
+    <h3 class="section-header">Total Price</h3>
+    <p class="price-total">$557.20</p>
+  </div>
+</div>
+<div class="order-totals-table">
+  <div class="order-subtotal"> <span class="label">Order Subtotal</span> <span class="value">$557.20</span> </div>
+  <div class="order-shipping"> <span class="label">
+						<!-- Display Shipping Method -->
+						
+					   
+						
+							  Shipping
+						
+					</span> <span class="value">
+						
+							N/A
+						
+					</span> </div>
+  <div class="order-sales-tax"> <span class="label">Sales Tax</span> <span class="value">
+					
+						N/A
+					
+				</span> </div>
+  <div class="cart-secondary cart-coupon-code"> <span class="promotional-code">Have a promotional code?</span>
+    <form class="cart-coupon hidden" action="https://shop.diesel.com/cart?dwcont=C841647051" method="post" name="dwfrm_cart_d0tviwqhjaom" id="apply-coupon">
+      <fieldset>
+        <label for="dwfrm_cart_couponCode"> Enter Coupon Code </label>
+        <input type="text" class="coupon-code" name="dwfrm_cart_couponCode" id="dwfrm_cart_couponCode" />
+        <button type="submit" value="dwfrm_cart_addCoupon" name="dwfrm_cart_addCoupon" id="add-coupon"> Apply </button>
+      </fieldset>
+    </form>
+  </div>
+  <hr>
+  <div class="order-total"> <span class="label">Total</span> <span class="value">$557.20</span> </div>
+  </tbody>
+</div>
+<ul class="product-availability-list">
+  <li class="not-available">The remaining items are currently not available. Please adjust the quantity.</li>
+</ul>
+<div class="mini-cart-details">
+  <!-- Report any requested source code -->
+  <!-- Report the active source code -->
+  <div class="bag-holder">
+    <a href="https://shop.diesel.com/cart" title="Go to My Bag" class="mini-cart-link"> <span id="mini-cart-icon" class="header-mini-cart empty-red-bag">Bag</span> <span class="bag-count">2</span> </a>
+    <div class="minicart-tool-tip"> <span class="arrow"></span>
+      <div class="msg">Be quick and Im yours</div>
+    </div>
+  </div>
+  <div class="mini-bag-content container-fluid  pageName" data-pagename="Mini Cart">
+    <div class="row">
+      <div class="col-lg-8 col-md-6 mini-cart-products">
+        <div class="mini-bag-wrapper">
+          <div class="mini-bag-slider">
+            <div class="mini-cart-image">
+              <div data-pname="W-KIRTON" class="remove-item button-text" data-pid="8057095991067"> </div>
+              <a href="http://shop.diesel.com/winter-jackets/w-kirton/8057095991067.html" title="W-KIRTON"> <img itemprop="image" class="primary-image" data-altimg="https://sits-pod26.demandware.net/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dw825698cf/images/large/00SESK_00JVL_81E_R.jpg?sw=170&amp;sh=226" src="https://sits-pod26.demandware.net/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dwb89d839e/images/large/00SESK_00JVL_81E_F.jpg?sw=170&amp;sh=226" alt="W-KIRTON, Blue" /> </a>
+            </div>
+            <div class="mini-cart-details clearfix">
+              <div class="mini-cart-name">
+                <h5><a href="http://shop.diesel.com/winter-jackets/w-kirton/8057095991067.html">W-KIRTON</a></h5> </div>
+              <div class="mini-cart-size">
+                <h6>
+				  	 	<span class="value">2</span>
+						<span class="label"> x </span>
+						<span class="mini-cart-attributes">
+									
+									
+									<span class="attribute">
+										<span class="value">
+											
+												Blue
+												
+											
+										</span>
+									</span>
+									
+									
+										,
+										
+									
+									
+									<span class="attribute">
+										<span class="value">
+											
+												L
+												W
+												 
+												
+											
+										</span>
+									</span>
+								
+							
+						</span>
+					</div>	
+		
+					<div class="mini-cart-pricing">
+					
+						
+					    	<div class="diesel-sr-eligible" name="sr_cartProductDiv"></div>
+					    
+						<div class="mini-cart-price">
+						    
+						    	
+						    	
+							    $557.20
+						    
+					    </div>
+					    
+					</div>
+					</div>
+					
+					
+			</div>
+			
+	
+	    		</div>
+	    	</div>
+	    	<div class="col-lg-4 col-md-6 mini-cart-totals">
+	    		<h2 class="heading-txt">SHOPPING BAG</h2>
+	    		<hr/>
+	    		<div class="item-details">
+	    		<span class="total-items">
+		    		
+			    		2 
+		    		
+		    			 
+			    		Item
+		    		
+	    		</span>
+	    				
+	    		
+    				<span class="items-price">
+		    			$557.20
+					</span>
+					</div>
+					<!-- Display Shipping Method -->
+					
+		    		
+                
+	    				
+		    	<hr/>
+		    		
+		                <div class="mini-bag-totals">
+		                    <span class="label">Order Subtotal:</span>
+		                    <span class="value">
+		                    		$557.20
+		                    </span>
+		                </div>
+	             
+            
+                <div class="mini-cartcheckout-button clearfix">
+					<a class="primary-button red viewCart viewBag" href="https://shop.diesel.com/cart" title="Go To My Bag">Go To My Bag</a>
+					
+
+	
+                </div>
+                
+                
+                
+            </div>
+		</div>
+		<div class="row"><span class="ipad_cross_icon"></span></div>
+	</div>
+ 
+    
+   
+
+    	<div class="rtaminicart" data-rtaCart="00SESK00JVL" data-rtaCartSku="8057095991067" data-rtaCartAmounts="278.60" data-rtaCartQuantities="2" data-rtaSpecial="" data-rtaTags=""></div>
+	
+
+
+    </div>
+
+
+
+<script type="text/javascript">
+jQuery(document).ready(function(e){
+	   $(".close-button").click(function(e){
+		   e.preventDefault();
+			app.dialog.close();
+	   });
+	 });
+</script>';
+		
+		
+			echo $return_div;
+			//redirect('Cart/show_cart');
+		
+	}
+	
+	public function remove_product()
+	{
+		if(!$this->session->userdata('s_uid') || $this->session->userdata('s_uid')==''){
+			$user_type = 'Guest';
+			$user_id   = $this->session->userdata('__ci_last_regenerate');
+			
+		}else{
+			$user_type = 'Member';
+			$user_id = $this->session->userdata('s_uid');
+		}
+		
+		$barcode = $this->input->post('barcode');
+		$style	 = $this->input->post('style');
+		
+		$removed_prod = $this->Cart_model->remove_prod($user_id,$style,$barcode);
+		
+		redirect('Cart/show_cart');
+	}
+	
+	public function update_product()
+	{
+		if(!$this->session->userdata('s_uid') || $this->session->userdata('s_uid')==''){
+			$user_type = 'Guest';
+			$user_id   = $this->session->userdata('__ci_last_regenerate');
+			
+		}else{
+			$user_type = 'Member';
+			$user_id = $this->session->userdata('s_uid');
+		}
+		
+		$barcode = $this->input->post('code');
+		$bar = $this->input->post('barcode_check');
+		$style	 = $this->input->post('style');
+		$size	 = $this->input->post('size_value');
+		$color	 = $this->input->post('color');
+		
+		
+		$size_rep = ltrim($size);
+		$fsize = rtrim($size_rep);
+		
+		$updated_prod = $this->Cart_model->update_prod($user_id,$style,$barcode,$fsize,$color,$bar);
+		
+		redirect('Cart/show_cart');
+	}
+	
+	public function remove_item()
+	{
+		$barcode = $_GET['barcode'];
+		$user_id = $_GET['user_id'];
+		
+		$this->Cart_model->delete_cart_item($barcode,$user_id);
+	}
 
 } // end of class
 

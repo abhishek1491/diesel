@@ -21,6 +21,9 @@ public function __construct(){
 
 
 public function details($cat='',$prod_name='',$style='',$color=''){
+	//$guest = $this->session->userdata('__ci_last_regenerate');
+	//var_dump($guest);
+	//die();
 	$data = '';
 	$this->data['title']="";
 	$data['category'] = $cat;
@@ -43,6 +46,7 @@ public function details($cat='',$prod_name='',$style='',$color=''){
 	//echo "<pre>";
 	//var_dump($this->data['size']);
 	//die();
+	$this->data['product_color'] = $color;
 	$view_file_name = 'product_detail_view';
 	$this->data['view_file_name'] = $view_file_name;
 	$this->template->load_root_view($view_file_name , $this->data);

@@ -676,4 +676,34 @@ return <<<HTML
 HTML;
 }
 
+function quickview_link($prod_type, $gender, $name, $style, $color_code, $cart_id, $qty, $barcode=""){
+    
+    switch ($gender){
+        
+        case 'W':
+            $fGen="women";
+        break;
+            case 'M':
+            $fGen="men";
+        break;
+        case 'w':
+            $fGen="women";
+        break;
+        case 'm':
+            $fGen="men";
+        break;
+        default:
+            $fGen="all";
+        break;
+    }
+    $prod_type     = clean_string($prod_type);
+    $formatappname = clean_string($name);
+    $formatid = $style."_".$color_code;
+
+    $link = base_url()."cart/show_product/$prod_type/$fGen/$formatappname/$formatid/$cart_id/$qty/$barcode";
+
+    return $link;
+
+}
+
 ?>

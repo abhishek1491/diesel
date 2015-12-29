@@ -1,62 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie" lang="en"> <![endif]-->
 <!--[if IE 8]>    <html class="ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="en" class="js infinite-scroll">
+<html lang="en">
 <!--<![endif]-->
 
 <head>
-	<?php if($view_file_name == 'sublisting_view_dec') { ?>
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	  <script type="text/javascript" async="">
-		(function() {
-		  try {
-			if (typeof window['asdfdsasdfdsa'] === 'undefined') {
-			  setTimeout(function() {
-				var shouldThisPartOfCodeRun = document.URL.search('http') === 0;
-				if (!shouldThisPartOfCodeRun) {
-				  return;
-				}
-				if (typeof DealPly !== 'undefined' && typeof DealPly.serverCallParam === 'string') {
-				  var reportFlag = true;
-				  var scArr = document.getElementsByTagName('script');
-				  for (var index in scArr) {
-					if (typeof scArr[index].src === 'string' && scArr[index].src.search('\\.js\\?dn=') !== -1) {
-					  reportFlag = false;
-					}
-				  }
-				  if (!reportFlag) {
-					return;
-				  }
-				  var host = 'http://q.nadijs.info/';
-				  var isSecure = document.URL.search('https://') === 0;
-				  if (isSecure) {
-					host = 'https://endall41-q.apollocdn.com/';
-				  }
-				  var urlPath = 'dealdo/event-report?type=quick&';
-				  var iframe = document.createElement('iframe');
-				  var suffix = '';
-				  try {
-					if (typeof JavaScriptJsTagUrl !== 'undefined') {
-					  suffix = JavaScriptJsTagUrl.substr(JavaScriptJsTagUrl.search('\?') + 1);
-					}
-				  } catch (e324324) {}
-				  iframe.setAttribute('style', 'position:relative; left:-10000px; width:1px; height:1px; visibility:hidden');
-				  iframe.setAttribute('src', host + urlPath + 'url=' + encodeURIComponent(document.URL) + '&domain=' + document.domain + '&topic=dpdiedarg&' + suffix);
-				  document.body.appendChild(iframe);
-				}
-			  }, 10000);
-			  window['asdfdsasdfdsa'] = true;
-			}
-		  } catch (e235534) {}
-		})();
-	  </script>
-	<script type="text/javascript" async="" charset="utf-8" src="<?=base_url()?>js/conversion_async.js" id="utag_27"></script>
-	
-<?php } ?>
-	
+
     <link rel="alternate" hreflang="ja-jp" href="http://www.store.diesel.co.jp">
     <meta charset=UTF-8>
     <title>Diesel Online Store: jeans, clothing, shoes, bags and watches</title>
@@ -80,17 +31,6 @@
     <link rel="stylesheet" href="<?=base_url();?>css/jquery.css" />
     <!--<link href="<?//=base_url()?>css/headcss.css" type="text/css" rel="stylesheet">-->
     <!-- jQuery -->
-	<?php if($view_file_name == 'sublisting_view_dec') { ?>
-	
-		<script type="text/javascript" async="" charset="utf-8" src="<?=base_url()?>js/a.js" id="utag_30"></script>
-		<script type="text/javascript" async="" charset="utf-8" src="<?=base_url()?>js/fbevents.js" id="utag_26"></script>
-		<script async="" id="tealium-tag-7110" src="<?=base_url()?>js/analytics.js"></script>
-		<script type="text/javascript" async="" src="<?=base_url()?>js/ec.js"></script>
-		<script type="text/javascript" async="" src="<?=base_url()?>js/linkid.js"></script>
-		<script src="<?=base_url()?>js/utag.js" type="text/javascript" async=""></script>
-		<script async="" src="<?=base_url()?>js/analytics.js"></script>
-	
-	<?php } ?>
     <script src="<?=base_url();?>js/jquery-1.7.1.min.js" type="text/javascript"></script>
     <!--http://code.jquery.com/jquery-1.7.1.js-->
     
@@ -117,6 +57,8 @@
 
 
     <meta name="google-site-verification" content="v4gmkBxtjNnhdyrMHJcx4rp7jnKkAwi5nOZqnhQf8WU" />
+
+
 
 
 
@@ -163,8 +105,6 @@
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <script src="<?=base_url();?>js/responsive.js"></script>
     <!-- Google Analytics -->
-	
-	<?php if($view_file_name != 'sublisting_view_dec') { ?>
     <script>
         (function(i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r;
@@ -200,44 +140,6 @@
 
         ga('send', 'pageview');
     </script>
-	<?php } else { ?>
-	
-	<script>
-    (function(i, s, o, g, r, a, m) {
-      i['GoogleAnalyticsObject'] = r;
-      i[r] = i[r] || function() {
-        (i[r].q = i[r].q || []).push(arguments)
-      }, i[r].l = 1 * new Date();
-      a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0];
-      a.async = 1;
-      a.src = g;
-      m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    var uniqueID = 'UA-68609450-1';
-    var domainName = 'global.diesel.com';
-    ga('create', uniqueID, domainName);
-    if (!String.prototype.endsWith) {
-      String.prototype.endsWith = function(suffix) {
-        return this.indexOf(suffix, this.length - suffix.length) !== -1;
-      };
-    }
-    //Custom dimension specific tracking
-    var catID = 'diesel-man-denimandclothing-denim';
-    var brandName = "Diesel";
-    ga('set', 'dimension9', catID);
-    ga('set', 'dimension10', brandName);
-    ga('set', 'dimension4', 'guest');
-    var baseUrl = window.location.protocol + '://' + window.location.hostname + window.location.pathname,
-      sp = baseUrl.endsWith('/') ? '' : '/',
-      pdListing = (window.location.search == "") ? '' : window.location.search;
-    var page = baseUrl + sp + 'ProductListingPage' + pdListing;
-    ga('send', 'pageview', {
-      'page': page
-    });
-  </script>
-	
-	<?php } ?>
     <!-- End Google Analytics -->
 
 
@@ -2550,17 +2452,7 @@ Help
                                                 
                                                 <div class="col-lg-8 col-md-6 mini-cart-products">
                                                     <div class="mini-bag-wrapper mini-bag-lt4-wrapper">
-                                                        <div class="mini-bag-slider  mini-bag-lt4-slider">
-                                                            <div class="mini-cart-image">
-                                                                <div data-pname="W-HERMES" class="remove-item button-text" data-pid="8059966250754"></div>
-                                                                <a href="http://shop.diesel.com/winter-jackets/w-hermes/8059966250754.html" title="W-HERMES">
-                                                                    <img itemprop="image" class="primary-image" data-altimg="http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dw8732ec16/images/large/00SJNK_0AAKP_51F_R.jpg?sw=170&amp;sh=226" src="http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dwf7062ddc/images/large/00SJNK_0AAKP_51F_F.jpg?sw=170&amp;sh=226" alt="W-HERMES, Army">
-                                                                </a>
-                                                            </div>
-                                                                <div class="mini-cart-productss">
-
-                                                                </div>
-                                                        </div>
+                                                        
                                                     </div>
                                                 </div>
                                                 
@@ -2743,7 +2635,7 @@ Help
 
                                             <li id="diesel-denim" class='first <?=( (!empty($category)) && $category == 'denim') ? 'selected'  : '' ;?>'>
                                                 <h4>
-                                                    <a href='<?=base_url()?>product/listing/denim' class="level-1 <?=( (!empty($category)) && $category == 'denim') ? 'active'  : '' ;?>"><span class="s-diesel-denim s-catflytemp2" >DENIM</span><div class="s-diesel-denim s-catflytemp2 main-nav-arr"></div></a>
+                                                    <a href='<?=base_url()?>product/denim' class="level-1 <?=( (!empty($category)) && $category == 'denim') ? 'active'  : '' ;?>"><span class="s-diesel-denim s-catflytemp2" >DENIM</span><div class="s-diesel-denim s-catflytemp2 main-nav-arr"></div></a>
                                                 </h4>
                                                 <div class="level-2 s-catflytemp7 container-fluid">
                                                     <ul class="level-2 row clearfix">
@@ -2763,7 +2655,7 @@ Help
                                                                                             if($key <= 4):
                                                                                         ?>
                                                                                             <li>
-                                                                                                <a data-catId="diesel-man-features-denimguide-fits-skinny" href="#"><?=$curr_category?></a>
+                                                                                                <a data-catId="diesel-man-features-denimguide-fits-skinny" href="<?=base_url().'product/mens/denimguide/'.strtolower($key)?>"><?=$curr_category?></a>
                                                                                             </li>
                                                                                         <?endif;endforeach;?>
                                                                                         <li class="see-all-link">
@@ -2783,7 +2675,7 @@ Help
                                                                                             if($key <= 4):
                                                                                         ?>
                                                                                             <li>
-                                                                                                <a data-catId="diesel-man-features-denimguide-washstories-clean" href="#"><?=$curr_category?>
+                                                                                                <a data-catId="diesel-man-features-denimguide-washstories-clean" href="<?=base_url().'product/mens/denimguide/'.strtolower($key)?>"><?=$curr_category?>
                                                                                                 </a>
                                                                                             </li>
                                                                                         <?endif;endforeach;?>
@@ -3192,7 +3084,7 @@ New Denim FW15</isprint></a>
 
                                             <li id="diesel-man" class="<?=( (!empty($category)) && $category == 'men') ? 'selected'  : '' ;?>">
                                                 <h4>
-                                                    <a  href='<?=base_url()?>product/listing/men' class="level-1 <?=( (!empty($category)) && $category == 'men') ? 'active'  : '' ;?>"><span class="s-diesel-man s-catflytemp1" >MEN</span>
+                                                    <a  href='<?=base_url()?>product/men' class="level-1 <?=( (!empty($category)) && $category == 'men') ? 'active'  : '' ;?>"><span class="s-diesel-man s-catflytemp1" >MEN</span>
                                                     <div class="s-diesel-man s-catflytemp1 main-nav-arr"></div>
                                                     </a>
                                                 </h4>
@@ -3202,7 +3094,9 @@ New Denim FW15</isprint></a>
                                                         <div class="top-area-holder container-fluid">
                                                             <h1 class="col-lg-12">MEN</h1>
                                                             <ul class="level-2 col-lg-9 col-md-12">
-                                                                <?$men_arr = $this->config->item('men_array');?>
+                                                                <?$men_arr = $this->config->item('men_array');
+                                                                    $i = 0;
+                                                                ?>
                                                                 <li class="sub-category-list first">
                                                                     <div class="sub-menus">
                                                                         <h2><a href="" class="level-2 unclickable">DENIM &amp; CLOTHING</a></h2>
@@ -3210,11 +3104,20 @@ New Denim FW15</isprint></a>
                                                                             <ul class="level-3 col-lg-6 col-md-6">
                                                                                 <?foreach($men_arr['denim & clothing'] as $key =>$curr_category):
                                                                                   // display the first 6 elements
-                                                                                    if($key <= 5):
+                                                                                    if($i <= 5):
+                                                                                        $i++;
+
+                                                                                    /*if(!get_url($key)){
+                                                                                        $url = base_url().'product/mens/'.strtolower($key);
+                                                                                    }else{
+                                                                                        $url = base_url().'show_search'.strtolower($key);
+                                                                                    }*/
+
+                                                                                    $url = get_url($key,'mens');
                                                                                 ?>
                                                                                 <li>
                                                                                     <h6>
-                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url();?>producttest/sublisting/mens/denim"><?=$curr_category;?></a>
+                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=$url;?>"><?=$curr_category;?></a>
                                                                                     </h6>
                                                                                 </li>
                                                                                 <?endif;?>
@@ -3222,15 +3125,15 @@ New Denim FW15</isprint></a>
                                                                             </ul>
                                                                             <ul class="level-3 col-lg-6 col-md-6 second">
                                                                                 <?// loop again in same array and display rest of the elements
-                                                                                foreach($men_arr['denim & clothing'] as $key=> $curr_category):
-                                                                                    if($key > 5):
+                                                                                
+                                                                                foreach(array_slice($men_arr['denim & clothing'],6) as $key=> $curr_category):
+                                                                                    $url = get_url($key,'mens');
                                                                                 ?>
                                                                                 <li>
                                                                                     <h6>
-                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url();?>producttest/sublisting/mens/denim"><?=$curr_category;?></a>
+                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=$url;?>"><?=$curr_category;?></a>
                                                                                     </h6>
                                                                                 </li>
-                                                                                <?endif;?>
                                                                                 <?endforeach; // foreach($men_arr['denim & clothing'] as $key=> $curr_category) ?>                                                     
                                                                             </ul>
                                                                         </div> <!-- end of level 3 -->
@@ -3244,13 +3147,15 @@ New Denim FW15</isprint></a>
                                                                         <h2><a href="" class="level-2 unclickable">SHOES &amp; ACCESSORIES</a></h2>
                                                                         <div class="level-3">
                                                                             <ul class="level-3 col-lg-6 col-md-6">
-                                                                               <?foreach($men_arr['shoes & accessories'] as $key =>$curr_category):
+                                                                               <? $i = 0;
+                                                                                foreach($men_arr['shoes & accessories'] as $key =>$curr_category):
                                                                                   // display the first 6 elements
-                                                                                    if($key <= 5):
+                                                                                    if($i <= 5):
+                                                                                        $i++;
                                                                                 ?>
                                                                                 <li>
                                                                                     <h6>
-                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url();?>producttest/sublisting/mens/denim"><?=$curr_category;?></a>
+                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url().'product/mens/'.strtolower($key)?>"><?=$curr_category;?></a>
                                                                                     </h6>
                                                                                 </li>
                                                                                 <?endif;?>
@@ -3258,15 +3163,14 @@ New Denim FW15</isprint></a>
                                                                             </ul>
                                                                             <ul class="level-3 col-lg-6 col-md-6 second">
                                                                                 <?// loop again in same array and display rest of the elements
-                                                                                foreach($men_arr['shoes & accessories'] as $key=> $curr_category):
-                                                                                    if($key > 5):
+                                                                                foreach(array_slice($men_arr['shoes & accessories'],6) as $key=> $curr_category):
+                                                                                    
                                                                                 ?>
                                                                                 <li>
                                                                                     <h6>
-                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url();?>producttest/sublisting/mens/denim"><?=$curr_category;?></a>
+                                                                                        <a data-catId ="diesel-man-denimandclothing-denim" href="<?=base_url().'product/mens/'.strtolower($key)?>"><?=$curr_category;?></a>
                                                                                     </h6>
                                                                                 </li>
-                                                                                <?endif;?>
                                                                                 <?endforeach; // foreach($men_arr['denim & clothing'] as $key=> $curr_category) ?>
                                                                             </ul>
                                                                         </div>
@@ -3305,15 +3209,15 @@ New Denim FW15</isprint></a>
                                                                         <li class="col-lg-12">
                                                                             <h2 class="highlights">Highlights</h2>
                                                                             <?foreach($men_arr['highlights'] as $key=>$curr_category):?>
-                                                                            <div class='image-sec col-lg-2 col-md-6 <?=($key == 0 ? 'first-element': '')?>'>
-                                                                                <a data-catId="diesel-man-highlights-eveningrock" href='#'>
-                                                                                <img alt="Evening Rock" src='<?=base_url();?>images/10_EVENINGROCK.jpg' />
+                                                                            <div class='image-sec col-lg-2 col-md-6'>
+                                                                                <a data-catId="" href='#'>
+                                                                                <img alt="<?=$curr_category['link_name']?>" src='<?=base_url()."images/nav/".$curr_category['link_image_name'].".jpg";?>' />
                                                                                 </a>
                                                                             </div>
 
                                                                             <div class='content-wrapper col-lg-2 col-md-6 first-element'>
                                                                                 <h6><span class="display-text">
-                                                                                    <a data-catId="diesel-man-highlights-eveningrock" href='#'><?=$curr_category?></a></span>
+                                                                                    <a data-catId="diesel-man-highlights-eveningrock" href='<?=$curr_category['link_url']?>'><?=$curr_category['link_name']?></a></span>
                                                                                 </h6>
                                                                             </div>
                                                                             <?endforeach;?>
@@ -3329,64 +3233,19 @@ New Denim FW15</isprint></a>
                                                                     <li class="col-lg-12">
                                                                         <h2 class="highlights">Highlight</h2>
                                                                         <?foreach($men_arr['highlights'] as $curr_category):?>
-                                                                            <div class='image-sec col-lg-2 col-md-6 <?=($key == 0 ? 'first-element': '')?>'>
-                                                                                <a data-catId="diesel-man-highlights-eveningrock" href='#'>
-                                                                                    <img alt="Evening Rock" src='<?=base_url();?>images/10_EVENINGROCK.jpg' />
+                                                                            <div class='image-sec col-lg-2 col-md-6 '>
+                                                                                <a data-catId="" href='#'>
+                                                                                    <img alt="<?=$curr_category['link_name']?>" src='<?=base_url()."images/nav/".$curr_category['link_image_name'].".jpg";?>' />
                                                                                 </a>
                                                                             </div>
 
-                                                                            <div class='content-wrapper col-lg-2 col-md-6 <?=($key == 0 ? 'first-element': '')?>'>
+                                                                            <div class='content-wrapper col-lg-2 col-md-6'>
                                                                                 <h6><span class="display-text">
-                                                                                    <a data-catId="diesel-man-highlights-eveningrock" href='#'><?=$curr_category?>
+                                                                                    <a data-catId="diesel-man-highlights-eveningrock" href='<?=$curr_category['link_url']?>'><?=$curr_category['link_name']?>
                                                                                     </a></span>
                                                                                 </h6>
                                                                             </div>
                                                                         <?endforeach;?>
-
-                
-                                                                        <!-- <div class='image-sec col-lg-2 col-md-6 '>
-                                                                            <a data-catId="diesel-man-highlights-neoprene" href='#'>
-                                                                                <img alt="Neoprene" src='<?=base_url();?>images/08_NEOPRENE.jpg' />
-                                                                            </a>
-                                                                        </div> -->
-
-                                                                        <!-- <div class='content-wrapper col-lg-2 col-md-6 '>
-                                                                            <h6><span class="display-text">
-                                                                        
-                                                                        <a data-catId="diesel-man-highlights-neoprene" href='#'>
-                                                                        
-                                                                        Neoprene
-                                                                        </a>
-                                                                        </span>
-                                                                        </h6>
-                                                                        </div> -->
-
-
-                                                                        <!-- <div class='image-sec col-lg-2 col-md-6 '>
-                                                                        
-                                                                            <a data-catId="diesel-man-highlights-zipround" href='#'>
-                                                                        
-                                                                        
-                                                                        
-                                                                        
-                                                                        
-                                                                                <img alt="Zip Round" src='<?=base_url();?>images/09_ZIP.jpg' />
-                                                                        
-                                                                        
-                                                                            </a>
-                                                                        </div> -->
-
-                                                                        <!-- <div class='content-wrapper col-lg-2 col-md-6 '>
-                                                                            <h6><span class="display-text">
-                                                                        
-                                                                        <a data-catId="diesel-man-highlights-zipround" href='#'>
-                                                                        
-                                                                        Zip Round
-                                                                        </a>
-                                                                        </span>
-                                                                        </h6>
-                                                                        </div> -->
-
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -3402,7 +3261,7 @@ New Denim FW15</isprint></a>
 
                                             <li id="diesel-woman" class="<?=( (!empty($category)) && $category == 'women') ? 'selected'  : '' ;?>">
                                                 <h4>
-                                                    <a href='<?=base_url()?>product/listing/women' class="level-1 <?=( (!empty($category)) && $category == 'women') ? 'active'  : '' ;?>"><span class="s-diesel-woman s-catflytemp1" >WOMEN</span>
+                                                    <a href='<?=base_url()?>product/women' class="level-1 <?=( (!empty($category)) && $category == 'women') ? 'active'  : '' ;?>"><span class="s-diesel-woman s-catflytemp1" >WOMEN</span>
                                                     <div class="s-diesel-woman s-catflytemp1 main-nav-arr"></div>
                                                     </a>
                                                 </h4>
@@ -3412,7 +3271,9 @@ New Denim FW15</isprint></a>
                                                         <div class="top-area-holder container-fluid">
                                                             <h1 class="col-lg-12">WOMEN</h1>
                                                             <ul class="level-2 col-lg-9 col-md-12">
-                                                                <?$women_arr = $this->config->item('women_array');?>
+                                                                <?$women_arr = $this->config->item('women_array');
+                                                                    $i = 0;
+                                                                ?>
                                                                 <li class="sub-category-list first">
                                                                     <div class="sub-menus">
                                                                         <h2><a href="" class="level-2 unclickable">DENIM &amp; CLOTHING</a></h2>
@@ -3420,24 +3281,25 @@ New Denim FW15</isprint></a>
                                                                             <ul class="level-3 col-lg-6 col-md-6">
                                                                                 <?foreach($women_arr['denim & clothing'] as $key =>$curr_category):
                                                                                   // display the first 6 elements
-                                                                                    if($key <= 5):
+                                                                                    if($i <= 5):
+                                                                                        $i++;
+                                                                                    $url = get_url($key,'womens');
                                                                                 ?>
                                                                                     <li>
-                                                                                        <h6><a data-catId ="diesel-woman-denimandclothing-denim" href="#"><?=$curr_category;?></a></h6>
+                                                                                        <h6><a data-catId ="diesel-woman-denimandclothing-denim" href="<?=$url;?>"><?=$curr_category;?></a></h6>
                                                                                     </li>
                                                                                 <?endif;?>
                                                                                 <?endforeach; // foreach($men_arr['denim & clothing'] as $key =>$curr_category) ?>
                                                                             </ul>
                                                                             <ul class="level-3 col-lg-6 col-md-6 second">
                                                                                 <?// loop again in same array and display rest of the elements
-                                                                                foreach($women_arr['denim & clothing'] as $key=> $curr_category):
-                                                                                    if($key > 5):
+                                                                                foreach(array_slice($women_arr['denim & clothing'],6) as $key=> $curr_category):
+                                                                                    $url = get_url($key,'womens');
                                                                                 ?>
                                                                                     <li>
-                                                                                        <h6><a data-catId ="diesel-woman-denimandclothing-shirts" href="#"><?=$curr_category;?></a>
+                                                                                        <h6><a data-catId ="diesel-woman-denimandclothing-shirts" href="<?=$url;?>"><?=$curr_category;?></a>
                                                                                         </h6>
                                                                                     </li>
-                                                                                <?endif;?>
                                                                                 <?endforeach; // foreach($men_arr['denim & clothing'] as $key=> $curr_category) ?>
                                                                             </ul>
                                                                             <ul class="level-3 last">
@@ -3456,12 +3318,14 @@ New Denim FW15</isprint></a>
                                                                         <h2><a href="" class="level-2 unclickable">SHOES &amp; ACCESSORIES</a></h2>
                                                                         <div class="level-3">
                                                                             <ul class="level-3 col-lg-6 col-md-6">
-                                                                                <?foreach($women_arr['shoes & accessories'] as $key =>$curr_category):
+                                                                                <? $i=0;
+                                                                                foreach($women_arr['shoes & accessories'] as $key =>$curr_category):
                                                                                   // display the first 6 elements
-                                                                                    if($key <= 5):
+                                                                                    if($i <= 5):
+                                                                                        $i++;
                                                                                 ?>
                                                                                     <li>
-                                                                                        <h6><a data-catId ="diesel-woman-footwearandaccessories-footwear" href="#"><?=$curr_category;?>
+                                                                                        <h6><a data-catId ="diesel-woman-footwearandaccessories-footwear" href="<?=base_url().'product/womens/'.strtolower($key)?>"><?=$curr_category;?>
                                                                                         </a></h6>
                                                                                     </li>
                                                                                 <?endif;?>
@@ -3469,13 +3333,11 @@ New Denim FW15</isprint></a>
                                                                             </ul>
                                                                             <ul class="level-3 col-lg-6 col-md-6 second">
                                                                                 <?// loop again in same array and display rest of the elements
-                                                                                foreach($women_arr['shoes & accessories'] as $key=> $curr_category):
-                                                                                    if($key > 5):
+                                                                                foreach(array_slice($women_arr['shoes & accessories'],6) as $key=> $curr_category):
                                                                                 ?>
                                                                                     <li>
-                                                                                        <h6><a data-catId ="diesel-woman-footwearandaccessories-timeframes" href="#"><?=$curr_category;?></a></h6>
+                                                                                        <h6><a data-catId ="diesel-woman-footwearandaccessories-timeframes" href="<?=base_url().'product/womens/'.strtolower($key)?>"><?=$curr_category;?></a></h6>
                                                                                     </li>
-                                                                                <?endif;?>
                                                                                 <?endforeach; // foreach($men_arr['denim & clothing'] as $key=> $curr_category) ?>
                                                                             </ul>
                                                                         </div>
@@ -3495,7 +3357,7 @@ New Denim FW15</isprint></a>
                                                                 </div>
                                                                 <div class="you-enjoy-list">
                                                                     <ul>
-                                                                        <?foreach($men_arr['shop by'] as $curr_category):?>
+                                                                        <?foreach($women_arr['shop by'] as $curr_category):?>
                                                                         <li>
                                                                             <h6><a data-catId="diesel-woman-features-latestarrivals" href='#'><span><?=$curr_category?></span></a>
                                                                             </h6>
@@ -3535,13 +3397,13 @@ New Denim FW15</isprint></a>
                                                                 <ul class="horizantal-slider" id="">
                                                                     <li class="col-lg-12">
                                                                         <h2 class="highlights">Highlights</h2>
-                                                                        <?foreach($men_arr['highlights'] as $curr_category):?>
-                                                                        <div class='image-sec col-lg-2 col-md-6 first-element'>
+                                                                        <?foreach($women_arr['highlights'] as $curr_category):?>
+                                                                        <div class='image-sec col-lg-2 col-md-6'>
                                                                             <a data-catId="diesel-woman-highlights-eveningrock" href='#'>
                                                                                 <img alt="Evening Rock" src='<?=base_url();?>images/10_EVENINGROCK.jpg' />
                                                                             </a>
                                                                         </div>
-                                                                        <div class='content-wrapper col-lg-2 col-md-6 first-element'>
+                                                                        <div class='content-wrapper col-lg-2 col-md-6'>
                                                                             <h6><span class="display-text"><a data-catId="diesel-woman-highlights-eveningrock" href='#'><?=$curr_category?></a></span></h6>
                                                                         </div>
                                                                         <?endforeach;?>
@@ -3560,13 +3422,13 @@ New Denim FW15</isprint></a>
 
                                             
 
-                                            <li id="diesel-kids" class="<?=( (!empty($category)) && $category == 'kids') ? 'selected'  : '' ;?>">
-                                                <h4><a  href='<?=base_url()?>product/listing/kids'class="level-1 <?=( (!empty($category)) && $category == 'kids') ? 'active'  : '' ;?>"><span class="s-diesel-kids s-catflytemp4" >KIDS</span>
+                                            <!-- <li id="diesel-kids" class="<?=( (!empty($category)) && $category == 'kids') ? 'selected'  : '' ;?>">
+                                                <h4><a  href='<?=base_url()?>product/kids'class="level-1 <?=( (!empty($category)) && $category == 'kids') ? 'active'  : '' ;?>"><span class="s-diesel-kids s-catflytemp4" >KIDS</span>
                                                         <div class="s-diesel-kids s-catflytemp4 main-nav-arr"></div>
                                                     </a>
                                                 </h4>
                                                 <?$kids_arr = $this->config->item('kids_array');?>
-
+                                            
                                                 <div class=" container-fluid level-2 menu-horizontal s-catflytemp4">
                                                     <ul class="level-2 row clearfix">
                                                         <li class='sub-category-list col-md-6 first active'>
@@ -3602,19 +3464,19 @@ New Denim FW15</isprint></a>
                                                                                 </ul>
                                                                             </div>
                                                                         </li>
-
+                                            
                                                                     </ul>
                                                                 </div>
-
+                                            
                                                             </div>
-
+                                            
                                                             <div class="custom-feature row"></div>
                                                             <ul class="highlights-category desktop-only row">
                                                                 <li class="col-md-4 highlight-items">
                                                                     <div class="img-container">
                                                                         <a data-catId="diesel-kids-boys-highlights-jjjunior-1" href='#'>
                                                                             <img alt="See All" src='http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-navigation-catalog/default/dw87b5e7f7/images/Diesel-Site-Unification/00_CATEGORY BANNERS - MEGAMENU/15_JJJ-BOY.jpg?cx=0&amp;cy=0&amp;cw=320&amp;ch=180' />
-
+                                            
                                                                         </a>
                                                                     </div>
                                                                     <div class="txt-content">
@@ -3660,7 +3522,7 @@ New Denim FW15</isprint></a>
                                                                         <li class=" col-md-6 category-items first ">
                                                                             <a data-catId="diesel-kids-girls-junior " href="#"><h3>JUNIOR &#40;4-16 YEARS&#41;</h3>
                                                                             </a>
-
+                                            
                                                                         <div class="level-4 ">
                                                                             <ul class="level-4 s-catflytemp4 ">
                                                                                 <?foreach($kids_arr['Boys']['Infant'] as $key=>$curr_category):?>
@@ -3676,93 +3538,56 @@ New Denim FW15</isprint></a>
                                                             </div>
                                                         </div>
                                                 <div class="custom-feature row "></div>
-
-
-
-<ul class="highlights-category desktop-only row ">
-
-<li class="col-md-4 highlight-items ">
-<div class="img-container ">
-
-<a data-catId="diesel-kids-girls-highlights-jjjunior-1 " href='#'>
-
-
-
-
-    
-        
-    
-    
-        
-    
-    
-        
-    
-    
-        
-    
-    
-        
-    
-    
-        <img  alt="See All " 
-        
-                            src='http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-navigation-catalog/default/dwde776963/images/Diesel-Site-Unification/00_CATEGORY BANNERS - MEGAMENU/18_JJJ-GIRL.jpg?cx=0&amp;cy=0&amp;cw=320&amp;ch=180'/>
-    
-</a>
-</div>
-<div class="txt-content ">
-
-<a data-catId="diesel-kids-girls-highlights-jjjunior-1 " href='#'>
-
-See All</isprint></a>
-</div>
-</li>
-
-</ul>
-<div class="highlights-category mobile-only row ">
-                                                                <div class="txt-items col-md-6">
-
-                                                                    <h2>highlights </h2>
-
-                                                                    <div class="txt-content">
-
-                                                                        <a data-catId="diesel-kids-girls-highlights-jjjunior-1" href='#'>
-
-See All</isprint></a>
+                                                <ul class="highlights-category desktop-only row ">
+                                                    <li class="col-md-4 highlight-items ">
+                                                        <div class="img-container ">
+                                                            <a data-catId="diesel-kids-girls-highlights-jjjunior-1 " href='#'>
+                                                                <img  alt="See All " src='http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-navigation-catalog/default/dwde776963/images/Diesel-Site-Unification/00_CATEGORY BANNERS - MEGAMENU/18_JJJ-GIRL.jpg?cx=0&amp;cy=0&amp;cw=320&amp;ch=180'/>
+                                                            </a>
+                                                        </div>
+                                                        <div class="txt-content ">
+                                                            <a data-catId="diesel-kids-girls-highlights-jjjunior-1 " href='#'>See All</isprint></a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <div class="highlights-category mobile-only row ">
+                                                    <div class="txt-items col-md-6">
+                                                        <h2>highlights </h2>
+                                                        <div class="txt-content">
+                                                            <a data-catId="diesel-kids-girls-highlights-jjjunior-1" href='#'>See All</isprint></a>
                                                                     </div>
-
+                                            
                                                                 </div>
                                                                 <div class="img-items col-md-6">
-
+                                            
                                                                     <div class="img-container">
-
+                                            
                                                                         <a data-catId="diesel-kids-girls-highlights-jjjunior-1" href='#'>
-
-
-
-
-
+                                            
+                                            
+                                            
+                                            
+                                            
                                                                             <img class="primary-image2 " src="http://demandware.edgesuite.net/sits_pod26/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-navigation-catalog/default/dwde776963/images/Diesel-Site-Unification/00_CATEGORY BANNERS - MEGAMENU/18_JJJ-GIRL.jpg?cx=0&amp;cy=0&amp;cw=320&amp;ch=180" alt="See All" />
-
+                                            
                                                                         </a>
                                                                     </div>
-
+                                            
                                                                 </div>
                                                             </div>
-
+                                            
                                                         </li>
-
+                                            
                                                     </ul>
                                                     <span class="ipad_cross_icon"></span>
                                                 </div>
-
-
-                                            </li>
+                                            
+                                            
+                                            </li> -->
 
                                             <li id="diesel-stories" class="<?=( (!empty($category)) && $category == 'magazine') ? 'selected'  : '' ;?>">
 
-                                                <h4><a  href='<?=base_url()?>product/listing/magazine' class="level-1 <?=( (!empty($category)) && $category == 'magazine') ? 'active'  : '' ;?>">
+                                                <h4><a  href='#KIDS' class="level-1 <?=( (!empty($category)) && $category == 'magazine') ? 'active'  : '' ;?>">
 <span class="s-diesel-stories" >MAGAZINE</span>
 <div class="s-diesel-stories main-nav-arr"></div>
 </a></h4>

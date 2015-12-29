@@ -1,5 +1,4 @@
 				
-				
 				<?php foreach($prod_arr as $curr_prod) {
 					
 					$product_name 	=  $curr_prod->disp_name;			
@@ -587,7 +586,7 @@
                                                         <ul class="swatches Color color-slides jcarousel-skin-tango" <?php if($count_color == 1) { ?>style="height: 96px;position: relative;width: 84px;" <?php } ?> <?php if($count_color == 2) { ?>style="height: 96px;position: relative;width: 168px;" <?php } ?> <?php if($count_color == 3) { ?>style="height: 96px;position: relative;width: 252px;" <?php } ?> <?php if($count_color == 4) { ?>style="height: 96px;position: relative;width: 336px;" <?php } ?> >
 														<?php for($i = 0; $i < $count_color; $i++) 
 														{ 
-															if($color[$i]->microcolor == $avalue)
+															if($color[$i]->color == $product_color)
 															{
 														?>	
                                                             <li class='selected swatch-ele'>
@@ -595,14 +594,12 @@
 
                                                                     <img class = "<?=$imgname?>" itemprop="image" src="<?=base_url();?>images/<?=$nameCode?>_<?=$washCode?>_<?=$imgname?>_F.jpg?sw=65&amp;sh=87" alt="W-NICK, Green" data-thumb='{"src":"<?=base_url();?>images/00SJT2_0CAKE_51F_F.jpg?sw=30&amp;sh=40","altimg":"<?=base_url();?>images/00SJT2_0CAKE_51F_R.jpg?sw=320&amp;sh=427","alt":"W-NICK, Green","title":"W-NICK, Green"}' />
 
-                                                                
-																<?php if($i <= 0) { ?>
 																
                                                                 <div title="<?php echo $color[$i]->color; ?>" class="selected-color-overlay">
                                                                     <h5><span class="colorname"><?php echo $color[$i]->microcolor; ?></span></h5>
                                                                 </div>
 																
-																<?php } ?>
+																
                                                             </li>
 														<?php } else { ?>
 															<li class='emptyswatch swatch-ele'>
@@ -659,17 +656,23 @@
 													});
 													
 													
-													$("ul.color-slides li > img").on("click",function()
+													$(".swatch-Slider").on("click",'li > img',function()
 													{
 														var overlay = jQuery('<div class="bx-loading" style="visibility:visible;"></div>');
 														overlay.appendTo(document.body);
+														var color = $(this).attr("class");
+														var url_original = window.location.href;
+														var url_split = url_original.split('/');
+														url_split.pop();
+														var url = url_split.join('/');
+														window.location.href = url+'/'+color;
 														//$(this).each(function(){
 															//var classname = $(this).parent().attr("class");
 															//console.log(classname);
 															//if(classname == 'emptyswatch')
 															//{
 																//console.log("hello");
-																var unsel = $('li.selected').removeClass("selected").addClass("emptyswatch");
+																/*var unsel = $('li.selected').removeClass("selected").addClass("emptyswatch");
 																var nsel = $(this).parent().removeClass("emptyswatch").addClass("selected");
 																//console.log(unsel);
 																//console.log(nsel);
@@ -692,45 +695,7 @@
 																//alert("success");
 																	if(result.length > 0)
 																	{
-																		var i = 0;
-																		var j = result.length;
-																		$("ul.product-slides").children().remove();
-																		$("ul.product-slides-list1").children().remove();
-																		$.each(result, function(key, val){	
 																			
-																			
-																			/*if(i == 0)
-																			{
-																				var prod_thumb = "<li style = 'visibility:visible;' id='product-thumbview-"+i+"'><a data-href='<?=base_url();?>' class='product-image main-image' title='<?php echo $product_name;?>'><img class='primary-image' src='<?=base_url().'images/'?>"+val.image_path+"' alt='<?php echo $product_name;?>,<?php echo $avalue;?>' title='<?php echo $product_name;?>,<?php echo $avalue;?>' /></a></li>";
-																				$("ul.product-slides").append(prod_thumb);
-																			}
-																			
-																			else
-																			{
-																				var prod_thumb = "<li id='product-thumbview-"+i+"'><a data-href='<?=base_url();?>' class='product-image main-image' title='<?php echo $product_name;?>'><img class='primary-image' src='<?=base_url().'images/'?>"+val.image_path+"' alt='<?php echo $product_name;?>,<?php echo $avalue;?>' title='<?php echo $product_name;?>,<?php echo $avalue;?>' /></a></li>";
-																				$("ul.product-slides").append(prod_thumb);
-																			}
-																			
-																			var clone1count = result.length - 1;
-																			if(i == 0)
-																			{
-																				var clone1 = "<li id='product-thumbview-"+clone1count+"'><a data-href='<?=base_url();?>' class='product-image main-image' title='<?php echo $product_name;?>'><img class='primary-image' src='<?=base_url().'images/'?>"+val.image_path+"' alt='<?php echo $product_name;?>,<?php echo $avalue;?>' title='<?php echo $product_name;?>,<?php echo $avalue;?>' /></a></li>";
-																				$("ul.product-slides-list1").append(clone1);
-																			}
-																			
-																			
-																			$("ul.product-slides-list1").append(prod_thumb);
-																			i++;
-																			
-																			if(i == result.length)
-																			{
-																				var clone2 = "<li id='product-thumbview-0><a data-href='<?=base_url();?>' class='product-image main-image' title='<?php echo $product_name;?>'><img class='primary-image' src='<?=base_url().'images/'?>"+val.image_path+"' alt='<?php echo $product_name;?>,<?php echo $avalue;?>' title='<?php echo $product_name;?>,<?php echo $avalue;?>' /></a></li>";
-																				$("ul.product-slides-list1").append(clone2);
-																			}*/
-																			
-																			
-																		
-																		});	
 																	}	
 																}		
 															});
@@ -865,8 +830,8 @@
 														$("li.emptyswatch.is-active").removeClass("is-active");
 														$(this).parent().addClass("is-active");
 														var value = $(this).text();
-														$("span.selectedVal").text(value);
-													});*/
+														$("span.selectedVal").text(value);*/
+													});
 													
 													
 													
@@ -922,7 +887,7 @@
 															$("ul.swatch-variation").on('click','a.swatchanchor',function(e){
 																e.stopPropagation();
 																
-																var overlay = jQuery('<div class="bx-loading"></div>');
+																var overlay = jQuery('<div id="overlay"></div>');
 																overlay.appendTo(document.body);
 																$("li.emptyswatch.is-active").removeClass("is-active");
 																$(this).parent().addClass("is-active");
@@ -966,10 +931,14 @@
 																	}		
 																});
 																
+																document.getElementById('color').setAttribute('value', color);
 																var size = $("li.emptyswatch.is-active a.swatchanchor").text();
 																document.getElementById('size').setAttribute('value', size);
+																setTimeout(function()
+																{ 
+																	$("#overlay").remove();
+																}, 2000);															
 																e.preventDefault();
-																$("#overlay").remove();
 																
 															});
 															
@@ -1115,7 +1084,7 @@
                                             <form action="<?php echo base_url();?>Cart/add" method="post" id="add-to-cart" class="pdpForm">
                                                 <fieldset>
 
-                                                    <input type="hidden" name="color" id="color" value="<?=$acode?>" />
+                                                    <input type="hidden" name="color" id="color" value="" />
                                                     <input type="hidden" name="style" id="style" value="<?=$style?>" />
                                                     <input type="hidden" name="qty" id="qty" value="1" />
                                                     <input type="hidden" name="barcode" id="barcode" value="" />
@@ -1284,3 +1253,4 @@ call us on <strong>877.344.8342</strong> (8:00 am to 12:00 am ET, 7-days/week)</
         </div> <!-- End content-asset -->
     
     </div>
+	

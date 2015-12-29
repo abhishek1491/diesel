@@ -1,3 +1,8 @@
+		<?php 
+		/*	echo '<pre>';
+			var_dump($cart_data);
+			die();*/
+		?>							
 		<script type="text/javascript">
 	       $(document).ready(function(){
 	    	   var bagCount = $('.bag-count').find('a').length ? $('.bag-count a').html() : $('.bag-count').html();
@@ -35,100 +40,145 @@
                 <!-- Report the active source code -->
                 <div class='cart-wrapper container-fluid   cnc-redesign ' data-purchase-limit='{"lineItem" :5.0, "totalItem": 50.0}'>
                     <div id="primary" class="primary-content pageName col-md-9" data-pagename="Cart">
-                        <form action="https://shop.diesel.com/cart?dwcont=C797141543" method="post"	name="dwfrm_cart" class="cart-items-form">
+                        <form action="<?php echo base_url();?>Cart/update_quantity" method="post" name="dwfrm_cart" id="cart_view_form" class="cart-items-form">
                             <fieldset>
                                 <button class="visually-hidden hide" type="submit" value="dwfrm_cart_updateCart" name="dwfrm_cart_updateCart"></button>
-                                <div id="js-continue-shoping" class="continue-shopping primary-button">Back to Shopping</div>
-                                <div class="cart-footer visually-hidden">
+								
+                                <?php 
+									if($cart_data != '')
+									{
+								?>
+								<div id="js-continue-shoping" class="continue-shopping primary-button">Back to Shopping</div>
+								<?php } ?>
+								<div class="cart-footer visually-hidden">
                                     <div class="cart-order-totals">
                                         <button type="submit" value="dwfrm_cart_updateCart" name="dwfrm_cart_updateCart" id="update-cart">
-								Update Cart
-							</button>
+											Update Cart
+										</button>
                                     </div>
                                 </div>
                                 <div class="tabling-data col-md-12">
-                                    <div class="thead-data row mobile-hide">
+                                    <?php 
+										if($cart_data != '')
+										{
+									?>
+									
+									<div class="thead-data row mobile-hide">
                                         <div class="col-md-6 section-header first-child">Shopping Bag
-                                            <span> -You have 2
-				             products in your bag</span>
+                                            <span>-You have <?php if(isset($count)){ echo $count;} ?> products in your bag</span> 
                                         </div>
                                         <h3 class="col-md-2 section-header qty">Quantity</h3>
                                         <h3 class="col-md-2 section-header price">Price</h3>
                                         <h3 class="col-md-2 section-header last-child">Total Price</h3>
                                     </div>
                                     <hr class="mobile-hide">
-                                        <div class="tbody-data row ">
-                                            <div class="primary-product-detail global.product col-sm-12 col-md-6">
-                                                <div class="item-image col-sm-4 col-md-5">
-                                                    <a href="http://shop.diesel.com/winter-jackets/w-hermes/8059966250747.html" title='W-HERMES'>
-                                                        <img itemprop="image" class="primary-image" data-altimg="https://sits-pod26.demandware.net/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dw8732ec16/images/large/00SJNK_0AAKP_51F_R.jpg?sw=215&amp;sh=287" src="https://sits-pod26.demandware.net/dw/image/v2/AAPK_PRD/on/demandware.static/-/Sites-diesel-master-catalog/default/dwf7062ddc/images/large/00SJNK_0AAKP_51F_F.jpg?sw=215&amp;sh=287" alt="W-HERMES, Army" />
-                                                    </a>
-                                                </div>
-                                                <div class="item-details col-sm-8 col-md-7">
-                                                    <div class="product-list-item">
-                                                        <div class="name">
-                                                            <a href="http://shop.diesel.com/winter-jackets/w-hermes/8059966250747.html" title="W-HERMES">Diesel W-HERMES</a>
-                                                        </div>
-                                                        <div class="product-group">Winter Jacket</div>
-                                                        <div class="attribute">
-                                                            <span class="label">Color:</span>
-                                                            <span class="value">
-				
-					Army
-				
-			</span>
-                                                        </div>
-                                                        <div class="attribute">
-                                                            <span class="label">Size:</span>
-                                                            <span class="value">
-				
-					L
-				
-			</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="diesel-sr-eligible-cart" name="sr_cartProductDiv"></div>
-                                                </div>
-                                                <div class='item-link'>
-                                                    <ul class="item-user-actions row ">
-                                                        <li class="remove-bag-item col-sm-4 col-md-4 col-lg-3">
-                                                            <button data-pname="W-HERMES" class="remove-product button-text" title="Remove product from cart" type="submit" value="REMOVE" name="dwfrm_cart_shipments_i0_items_i0_deleteProduct">
-                                                                <span>REMOVE</span>
-                                                            </button>
-                                                        </li>
-                                                        <li class="edit-details col-sm-4 col-lg-2 col-md-4 sprite-icon">
-                                                            <a href="/winter-jackets/w-hermes/8059966250747.html?Quantity=1&amp;uuid=bcq5ciaaiKWWAaaadoY7hYEzFH" title="W-HERMES" >Edit </a>
-                                                        </li>
-                                                        <li class=' wish-list-txt col-sm-4 col-md-4 col-lg-7 '>
-                                                            <a data-pname="W-HERMES" class="add-to-wishlist" href="https://shop.diesel.com/cart-addtowishlist?pid=8059966250747" name="dwfrm_cart_shipments_i0_items_i0_addToWishList" title="Move to Wishlist">
-	                                                   Move to Wishlist
-	                                               </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="secondary-product-detail col-md-6 equal-width-five-sec">
-                                                <div class="product-details-template row" data-hbs-template="productiondetails">
-                                                    <div class="item-quantity  col-sm-6 col-md-4 equal-width-two">
-                                                        <h3 class="section-header">Quantity</h3>
-                                                        <span class='decrease-quantity icons  disabled ' data-product-name="W-HERMES"></span>
-                                                        <input type="text" name="dwfrm_cart_shipments_i0_items_i0_quantity" size="2" maxlength="2" value="1" class="input-text" disabled="disabled" />
-                                                        <span class='increase-quantity icons ' data-product-name="W-HERMES"></span>
-                                                    </div>
-                                                    <div class="item-price col-sm-6  col-md-4 equal-width-four">
-                                                        <h3 class="section-header">Price</h3>
-                                                        <p class="price-sales">$498.00</p>
-                                                    </div>
-                                                    <div class="item-total  col-sm-12 col-md-4 equal-width-four-sec">
-                                                        <h3 class="section-header">Total Price</h3>
-                                                        <p class="price-total">$498.00</p>
-                                                    </div>
-                                                </div>
-                                                <ul class="product-availability-list"></ul>
-                                            </div>
-                                        </div>
-                                        <div class="item-seperator"></div>
-                                        <div class="tbody-data row ">
+										<?php
+											$i = 0;
+											foreach($cart_data as $row)
+											{
+												$prod_name 	= $row['prod_name'];
+												$color 		= $row['color'];	
+												$prod_type 	= $row['prod_type'];
+												$price 	   	= $row['original_price'];
+												$size 	   	= $row['size'];
+												$quantity 	= $row['qty'];
+												$barcode	= $row['code'];
+												$style		= $row['product_id'];
+												$cart_id	= $row['cart_id'];	
+												$gender		= 'M';	
+												$i++;
+										?>
+											<div class="tbody-data row ">
+												<div class="primary-product-detail global.product col-sm-12 col-md-6">
+													<div class="item-image col-sm-4 col-md-5">
+														<a href="#" title='<?=$prod_name?>'>
+															<img itemprop="image" class="primary-image" data-altimg="<?php echo base_url();?>images/<?php  echo $row['image_pathname'][0]->image_path ;  ?>" src="<?php echo base_url();?>images/<?php echo $row['image_pathname'][0]->image_path ; ?>" alt="<?=$prod_name?>, <?=$row['mc'][0]->microcolor?>" />
+														</a>
+													</div>
+													<div class="item-details col-sm-8 col-md-7">
+														<div class="product-list-item">
+															<div class="name">
+																<a href="#" title="W-HERMES"><?php echo $prod_name;?></a>
+															</div>
+															<div class="product-group"><?php echo $prod_type;?></div>
+															<div class="attribute">
+																<span class="label">Color:</span>
+																<span class="value">
+					
+																	<?php echo $row['mc'][0]->microcolor;?>
+					
+																</span>
+															</div>
+															<div class="attribute">
+																<span class="label">Size:</span>
+																<span class="value">
+					
+																	<?php echo $size;?>
+					
+																</span>
+															</div>
+														</div>
+														<div class="diesel-sr-eligible-cart" name="sr_cartProductDiv"></div>
+													</div>
+													<div class='item-link'>
+														<ul class="item-user-actions row ">
+															<li class="remove-bag-item col-sm-4 col-md-4 col-lg-3">
+																<button data-pname="W-HERMES"  class="remove-product button-text" title="Remove product from cart" type="submit" value="REMOVE" name="dwfrm_cart_shipments_i0_items_i0_deleteProduct">
+																	<span>REMOVE</span>
+																</button>
+															</li>
+															<li class="edit-details col-sm-4 col-lg-2 col-md-4 sprite-icon">
+																<a href="<?=base_url()?>Cart/show_product/<?=$prod_type?>/<?=$prod_name?>/<?=$barcode?>" title="W-HERMES" >Edit </a>
+															</li>
+															<li class=' wish-list-txt col-sm-4 col-md-4 col-lg-7 '>
+																<a data-pname="W-HERMES" class="add-to-wishlist" href="https://shop.diesel.com/cart-addtowishlist?pid=8059966250747" name="dwfrm_cart_shipments_i0_items_i0_addToWishList" title="Move to Wishlist">
+																	Move to Wishlist
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+												
+												
+												<div class="secondary-product-detail col-md-6 equal-width-five-sec">
+													<div class="product-details-template row" data-hbs-template="productiondetails">
+														<div class="item-quantity  col-sm-6 col-md-4 equal-width-two">
+															<h3 class="section-header">Quantity</h3>
+															<span class='decrease-quantity icons  disabled ' data-product-name="W-HERMES"></span>
+															<input type="text" name="dwfrm_cart_shipments_i0_items_i0_quantity" size="2" maxlength="2" value="<?php echo $quantity;?>" class="input-text" disabled="disabled" />
+															<input type="hidden" name="barcode" id="barcode" value="<?php echo $barcode;?>" />
+															<input type="hidden" name="style" id="style" value="<?php echo $style;?>" />
+															<span class='increase-quantity icons ' data-product-name="W-HERMES"></span>
+														</div>
+														<div class="item-price col-sm-6  col-md-4 equal-width-four">
+															<h3 class="section-header">Price</h3>
+															<p class="price-sales"><?php echo $price;?></p>
+														</div>
+														<div class="item-total  col-sm-12 col-md-4 equal-width-four-sec">
+															<h3 class="section-header">Total Price</h3>
+															<p class="price-total"><?php echo $price;?></p>
+														</div>
+													</div>
+													<ul class="product-availability-list"></ul>
+												</div>
+											</div>
+											<div class="item-seperator"></div>
+										<?php } } else { ?>
+										
+										<div class="cart-empty">
+										<h2 class="empty-bag-title">FEED ME I'M HUNGRY</h2>
+										<hr>
+											<div class="empty-header">Your Shopping Bag is empty</div>
+
+											<div class="cont-shopping">
+											<a href="" class="continue button primary-button">
+												Back To Shopping  
+											</a>
+											</div>
+										</div>
+										
+										<?php } ?>
+                                        <!--<div class="tbody-data row ">
                                             <div class="primary-product-detail global.product col-sm-12 col-md-6">
                                                 <div class="item-image col-sm-4 col-md-5">
                                                     <a href="http://shop.diesel.com/winter-jackets/w-hermes/8059966250761.html" title='W-HERMES'>
@@ -198,11 +248,41 @@
                                                 <ul class="product-availability-list"></ul>
                                             </div>
                                         </div>
-                                        <div class="item-seperator"></div>
+                                        <div class="item-seperator"></div>-->
                                     </div>
+									
                                 </fieldset>
                             </form>
                         </div>
+						<script type="text/javascript">
+													
+							$(".remove-product").click(function(e) {
+								var bar = $(this).parent().closest('div');
+								var ba = bar.parent();
+								var b  = ba.parent();
+								var barcode_find = b.find('#barcode');
+								var barcode = barcode_find.attr('value');
+								var style_find = b.find('#style');
+								var style = style_find.attr('value');
+								var data = {'style': style,'barcode':barcode};
+								var url = '<?php echo base_url();?>Cart/remove_product';
+								document.getElementById('cart_view_form').action = url;
+
+								$(".cart-items-form").submit(function(e){
+										$.ajax({
+										type: "POST",
+										cache     : false,
+										dataType: 'json',
+										data: data
+								});
+							});
+							});
+
+						</script>
+						<?php 
+							if($cart_data != '')
+							{
+						?>
                         <div id="secondary" class="nav cart col-md-3" data-bonuseligibleorder="false">
                             <div class="return-item-msg">
                                 <div class="icon-return">
@@ -297,6 +377,7 @@
                             </div>
                             <div class="cart-secondary last-child"></div>
                         </div>
+						<?php } ?>
                     </div>
                     <div class="recent-youmay mybag-recent-youmay">
                         <div class="recommendations">
